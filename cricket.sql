@@ -1,15 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.5
+-- version 4.0.4
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 05, 2014 at 05:43 AM
--- Server version: 5.5.16
--- PHP Version: 5.3.8
+-- Generation Time: Nov 07, 2014 at 09:59 AM
+-- Server version: 5.6.12-log
+-- PHP Version: 5.4.12
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
--- vkjdsbkbsdfkjgbfskjbkjfdgbkjkjg
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `cricket`
 --
+CREATE DATABASE IF NOT EXISTS `cricket` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `cricket`;
 
 -- --------------------------------------------------------
 
@@ -639,6 +641,33 @@ INSERT INTO `pro_news` (`pid`, `title`, `url`, `metatitle`, `metakey`, `metadesc
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pro_player`
+--
+
+CREATE TABLE IF NOT EXISTS `pro_player` (
+  `pid` int(10) NOT NULL AUTO_INCREMENT,
+  `playerName` varchar(255) NOT NULL,
+  `playerImage` varchar(255) NOT NULL,
+  `teamName` varchar(255) NOT NULL,
+  `age` int(3) NOT NULL,
+  `playerProfile` enum('Batsman','Bowler','All Rounder','Wicket Keeper/Batsman','Caption/Bowler','Caption/All Rounder','Caption/Wicket Keeper','Caption/Batsman','Caption/Wicket Keeper/Batsman') NOT NULL DEFAULT 'Batsman',
+  `profileStatus` varchar(255) NOT NULL,
+  `playTeams` varchar(255) NOT NULL,
+  `status` enum('Active','Inactive','','') NOT NULL DEFAULT 'Active',
+  PRIMARY KEY (`pid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `pro_player`
+--
+
+INSERT INTO `pro_player` (`pid`, `playerName`, `playerImage`, `teamName`, `age`, `playerProfile`, `profileStatus`, `playTeams`, `status`) VALUES
+(4, 'Inshant Sharma', '2839828559.png', '2', 26, '', '', 'India', 'Active'),
+(5, 'Inshant Sharma', '2883225689.png', '19', 26, '', '', 'India', 'Active');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pro_series`
 --
 
@@ -771,66 +800,26 @@ INSERT INTO `pro_team` (`pid`, `name`, `image`, `date_time`, `status`, `descript
 (8, 'Rajasthan Royals', '1067221317953643823.png', '2013-08-20 08:31:06', 'Active', '<p>\r\n	Rajasthan Royals</p>\r\n'),
 (7, 'Mumbai Indians', '1951533792085187580.png', '2013-08-20 08:28:58', 'Active', '<p>\r\n	Mumbai Indians</p>\r\n'),
 (6, 'Zimbabwe', '18133074872108921858.png', '2013-08-20 08:09:08', 'Active', '<p>\r\n	Zimbabwe Cricket</p>\r\n'),
-(9, 'Brisbane Heat', '1750405519576852832.png', '2013-08-20 08:32:05', 'Active', '<p>\r\n	Brisbane Heat</p>\r\n'),
-(10, 'Trinidad and Tobago', '333399898424531710.png', '2013-08-20 08:33:23', 'Active', '<p>\r\n	Trinidad and Tobago</p>\r\n'),
 (11, 'Chennai Super Kings', '271744836115819864.png', '2013-08-20 08:34:09', 'Active', '<p>\r\n	Chennai Super Kings</p>\r\n'),
-(12, 'Nashua Titans', '6194186417863492.png', '2013-08-20 08:35:27', 'Active', '<p>\r\n	Nashua Titans</p>\r\n'),
-(13, 'Highveld Lions', '404080313943747824.jpg', '2013-08-20 08:36:30', 'Active', '<p>\r\n	Highveld Lions</p>\r\n'),
-(14, 'Perth Scorchers', '1089922414760833476.png', '2013-08-20 08:37:23', 'Active', '<p>\r\n	Perth Scorchers</p>\r\n'),
-(15, 'TBC', '3425023271009626102.png', '2013-08-20 08:38:19', 'Active', '<p>\r\n	To Be Confirmed</p>\r\n'),
 (16, 'England', '8107885781995863831.png', '2013-08-21 08:20:23', 'Active', '<p>\r\n	England Cricket Board (ECB)</p>\r\n'),
 (17, 'Australia', '656563657191513712.png', '2013-08-21 08:21:32', 'Active', '<p>\r\n	Australia Cricket</p>\r\n'),
-(18, 'Scotland', '709938438516899069.jpg', '2013-08-21 08:43:35', 'Active', '<p>\r\n	Scotland Cricket</p>\r\n'),
 (19, 'India', '16078295351639943705.png', '2013-08-25 12:54:43', 'Active', '<p>\r\n	BCCI</p>\r\n'),
 (20, 'Sri Lanka', '139464047956957736.png', '2013-09-05 11:31:39', 'Active', '<p>\r\n	Sri Lanka Cricket</p>\r\n'),
 (21, 'New Zealand', '1950558986711477655.jpg', '2013-09-12 08:58:13', 'Active', '<p>\r\n	New Zealand Cricket</p>\r\n'),
 (22, 'Bangladesh', '13982644991787328695.png', '2013-09-12 08:58:40', 'Active', '<p>\r\n	Bangladesh Cricket</p>\r\n'),
 (23, 'South Africa', '214547532238052960.jpg', '2013-09-12 09:17:08', 'Active', '<p>\r\n	South Africa Cricket</p>\r\n'),
-(24, 'Otago Volts', '709962582237097808.gif', '2013-09-17 17:21:51', 'Active', '<p>\r\n	Otago Volts</p>\r\n'),
-(25, 'Faisalabad Wolves', '8634454011924005836.jpg', '2013-09-17 17:24:56', 'Active', '<p>\r\n	Faisalabad Wolves</p>\r\n'),
 (26, 'Sunrisers Hyderabad', '1039929566353753174.png', '2013-09-17 17:26:23', 'Active', '<p>\r\n	Sunrisers Hyderabad</p>\r\n'),
-(27, 'Kandurata Warriors', '2033873359972946085.png', '2013-09-17 17:50:47', 'Active', '<p>\r\n	Kandurata Warriors</p>\r\n'),
 (28, 'West Indies', '7368057661956980551.gif', '2013-10-09 08:25:10', 'Active', '<p>\r\n	West Indies</p>\r\n'),
 (29, 'Afghanistan', '2217851411879945580.jpg', '2013-10-29 10:14:41', 'Active', '<p>\r\n	Afghanistan Cricket Board</p>\r\n'),
-(30, 'Melbourne Stars', '1554424597463279317.jpg', '2013-11-01 10:38:56', 'Active', '<p>\r\n	Melbourne Stars</p>\r\n'),
-(31, 'Melbourne Renegades', '16871709191954254382.jpg', '2013-11-01 10:41:30', 'Active', '<p>\r\n	Melbourne Renegades</p>\r\n'),
-(32, 'Sydney Sixers', '561107863710131076.jpg', '2013-11-01 10:44:15', 'Active', '<p>\r\n	Sydney Sixers</p>\r\n'),
-(33, 'Sydney Thunder', '841225612023068839.png', '2013-11-01 10:45:18', 'Active', '<p>\r\n	Sydney Thunder</p>\r\n'),
-(34, 'Hobart Hurricanes', '655058349411693199.png', '2013-11-01 10:48:06', 'Active', '<p>\r\n	Hobart Hurricanes</p>\r\n'),
-(35, 'Adelaide Strikers', '1090254236506025670.jpg', '2013-11-01 10:49:09', 'Active', '<p>\r\n	Adelaide Strikers</p>\r\n'),
 (36, 'Hong Kong', '194868587397452020.jpeg', '2013-12-12 08:02:07', 'Active', '<p>\r\n	Hong Kong Cricket</p>\r\n'),
 (37, 'Nepal', '1055919774159347545.jpg', '2013-12-12 08:20:59', 'Active', '<p>\r\n	Nepal Cricket</p>\r\n'),
 (38, 'Ireland', '21338905081950854831.jpg', '2013-12-12 08:24:55', 'Active', '<p>\r\n	Ireland Cricket</p>\r\n'),
 (39, 'Netherlands', '3549999601660623698.jpg', '2013-12-12 08:30:38', 'Active', '<p>\r\n	Netherlands Cricket</p>\r\n'),
 (40, 'United Arab Emirates', '515573701321456015.jpg', '2013-12-12 08:32:43', 'Active', '<p>\r\n	United Arab Emirates Cricket</p>\r\n'),
-(41, 'Dolphins', '1179447334387943749.jpg', '2013-12-31 15:37:20', 'Active', '<p>\r\n	Sunfoil Dolphins</p>\r\n'),
-(42, 'Titans', '1820838063367645255.jpeg', '2013-12-31 15:39:09', 'Active', '<p>\r\n	The Unlimited Titans</p>\r\n'),
-(43, 'Warriors', '11836873211677594756.jpg', '2013-12-31 15:43:52', 'Active', '<p>\r\n	Chevrolet Warriors</p>\r\n'),
-(44, 'Lions', '4944821731846716054.jpg', '2013-12-31 16:14:28', 'Active', '<p>\r\n	bizhub Highveld Lions</p>\r\n'),
-(45, 'Cape Cobras', '17091445366783608.jpg', '2013-12-31 16:18:35', 'Active', '<p>\r\n	Nashua Mobile Cape Cobras</p>\r\n'),
-(46, 'Knights', '15854228642076244301.jpg', '2013-12-31 16:19:42', 'Active', '<p>\r\n	Chevrolet Knights</p>\r\n'),
 (47, 'Kolkata Knight Riders', '16347005301919330253.png', '2014-03-19 16:42:33', 'Active', '<p>\r\n	Kolkata Knight Riders</p>\r\n'),
 (48, 'Delhi Daredevils', '1179459940233906950.png', '2014-03-19 16:46:16', 'Active', '<p>\r\n	Delhi Daredevils</p>\r\n'),
 (49, 'Royal Challengers Bangalore', '9248230241125129147.png', '2014-03-19 16:47:30', 'Active', '<p>\r\n	Royal Challengers Bangalore</p>\r\n'),
-(50, 'Kings XI Punjab', '17021452361814526586.png', '2014-03-19 16:51:10', 'Active', '<p>\r\n	Kings XI Punjab</p>\r\n'),
-(51, 'Worcestershire', '16873317302129954020.png', '2014-05-15 18:35:40', 'Active', '<p>\r\n	<b>Worcestershire</b></p>\r\n'),
-(52, 'Durham', '7744000471440358011.png', '2014-05-15 18:36:01', 'Active', '<p>\r\n	Durham</p>\r\n'),
-(53, 'Yorkshire', '82177213208293571.jpg', '2014-05-15 18:36:43', 'Active', '<p>\r\n	Yorkshire</p>\r\n'),
-(54, 'Northamptonshire', '1725126749243248167.jpg', '2014-05-15 18:37:24', 'Active', '<p>\r\n	Northamptonshire</p>\r\n'),
-(55, 'Gloucestershire', '4202290641323733717.png', '2014-05-15 18:38:08', 'Active', '<p>\r\n	Gloucestershire</p>\r\n'),
-(56, 'Somerset', '12874921291924950067.png', '2014-05-15 18:38:40', 'Active', '<p>\r\n	Somerset</p>\r\n'),
-(57, 'Leicestershire', '843692759458603793.jpg', '2014-05-15 18:39:34', 'Active', '<p>\r\n	Leicestershire</p>\r\n'),
-(58, 'Derbyshire', '15603634521959367798.jpg', '2014-05-15 18:40:03', 'Active', '<p>\r\n	Derbyshire</p>\r\n'),
-(59, 'Nottinghamshire', '473836610129821468.jpg', '2014-05-15 18:40:47', 'Active', '<p>\r\n	Nottinghamshire</p>\r\n'),
-(60, 'Lancashire', '21363326621067220648.jpg', '2014-05-15 18:41:27', 'Active', '<p>\r\n	Lancashire</p>\r\n'),
-(61, 'Hampshire', '11398220351836425010.jpg', '2014-05-15 18:42:02', 'Active', '<p>\r\n	Hampshire</p>\r\n'),
-(62, 'Glamorgan', '9493159881116397325.jpg', '2014-05-15 18:42:37', 'Active', '<p>\r\n	Glamorgan</p>\r\n'),
-(63, 'Sussex', '13968898147263809.jpg', '2014-05-15 18:44:00', 'Active', '<p>\r\n	Sussex</p>\r\n'),
-(64, 'Surrey', '4906622101011758597.png', '2014-05-15 18:44:33', 'Active', '<p>\r\n	Surrey</p>\r\n'),
-(65, 'Middlesex', '6475025391581987059.jpg', '2014-05-17 06:44:43', 'Active', '<p>\r\n	Middlesex</p>\r\n'),
-(66, 'Essex', '1448846011269778007.jpg', '2014-05-17 06:46:34', 'Active', '<p>\r\n	Essex</p>\r\n'),
-(67, 'Warwickshire', '20523138351709254573.jpg', '2014-05-21 07:40:20', 'Active', '<p>\r\n	Warwickshire</p>\r\n'),
-(68, 'Kent Spitfires', '14979172991254423489.gif', '2014-06-06 18:34:04', 'Active', '<p>\r\n	Kent Spitfires</p>\r\n');
+(50, 'Kings XI Punjab', '17021452361814526586.png', '2014-03-19 16:51:10', 'Active', '<p>\r\n	Kings XI Punjab</p>\r\n');
 
 -- --------------------------------------------------------
 
