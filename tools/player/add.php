@@ -11,7 +11,7 @@ if($img=='del'){
 	$cms->redir($red, true);
 }
 if($cms->is_post_back()){
-print_r($_POST);die("dvdvkjdvk");
+ 
 	$path = UP_FILES_FS_PATH."/orginal";
 	if($_FILES[playerImage][name]){
 		$ext=end(explode('.',$_FILES[playerImage][name]));
@@ -58,7 +58,7 @@ if(isset($id)){
      </tr>
    <tr>
       <td width="25%"  class="label">Select team:</td>
-      <td width="75%"><select name="teamName" class="txt medium"  lang="R">
+      <td width="75%"><select name="teamId" class="txt medium"  lang="R">
 	  				<?php
 					$rsAdmin2=$cms->db_query("select pid,name from #_team where status='Active'");
 					while($arrAdmin2=$cms->db_fetch_array($rsAdmin2)){?>
