@@ -80,8 +80,16 @@ if(!$_SESSION["ses_adm_id"]){$cms->redir(SITE_PATH_ADM."login");die;}
         <div class="ul-arrow">
           <ul>
            
-             <li><a href="<?=SITE_PATH_ADM?>player/?mode=add">Add Team</a></li>
-            <li><a href="<?=SITE_PATH_ADM?>player/">Manage Team</a></li> 
+             <li><a href="<?=SITE_PATH_ADM?>player/?mode=add">Add Player</a></li>
+            <li><a href="<?=SITE_PATH_ADM?>player/">Manage Player</a></li> 
+          </ul>
+        </div> </li>
+		<li><a href="#">Prediction Management</a>
+        <div class="ul-arrow">
+          <ul>
+           
+             <li><a href="<?=SITE_PATH_ADM?>prediction/?mode=add">Add Prediction</a></li>
+            <li><a href="<?=SITE_PATH_ADM?>prediction/">Manage Prediction</a></li> 
           </ul>
         </div> </li>
 		 <li><a href="#">News Management</a>

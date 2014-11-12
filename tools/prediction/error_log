@@ -1,0 +1,1 @@
+[26-Aug-2013 02:08:35 America/New_York] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/cricw/public_html/tools/team/index.php:3) in /home/cricw/public_html/lib/funcs_lib.inc.php on line 1231
