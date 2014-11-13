@@ -40,7 +40,7 @@ ob_start();
 <meta name="author" content="Fizzkart CDI" />
 <meta name="keywords" content="%%keywords%%" />
 <meta name="description" content="%%description%%" /> 
-<?php include_once "common_css.php"; ?>
+<?php  include_once "common_css.php"; ?>
 </head> 
 
 <div id="preloader">
