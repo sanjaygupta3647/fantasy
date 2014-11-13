@@ -12,7 +12,13 @@ if($cms->is_post_back()){
 		$arrNew[total_run_team1] 			= $_POST[total_score_team1];
 		$arrNew[total_run_team2] 			= $_POST[total_score_team2];
 		$arrNew[run_in_first_over_team1] 	= $_POST[run_in_first_over1];
+		$arrNew[total_wicket_team1] 		= $_POST[total_wicket_team1];
+		$arrNew[total_wicket_team2] 		= $_POST[total_wicket_team2];
 		$arrNew[run_in_first_over_team2] 	= $_POST[run_in_first_over2];
+		$arrNew[total_fours] 				= $_POST[total_fours];
+		$arrNew[total_six] 					= $_POST[total_six];
+		$arrNew[heighest_run_batsmen] 		= $_POST[team_name_batsmen]." ".$_POST[player_name_batsmen]." - ".$_POST[heighest_run_batsmen];
+		$arrNew[heighest_wicket_tacker] 	= $_POST[team_name_bowler]." ".$_POST[player_name_bowler]." - ".$_POST[heighest_wicket_tacker];
 		$arrNew[winning_team] 				= $_POST[winning_team];
 		$arrNew[winning_status] 			= $_POST[winning_status];
 		$arrNew[match_id] 					= $match_id;
@@ -87,7 +93,7 @@ if($cms->is_post_back()){
 			}
 		}
 		if($arrBatsmen[match_id] 	!= 0){
-			$cms->sqlquery("show","match_summary",$arrNew);
+			$cms->sqlquery("rs","match_summary",$arrNew);
 			$updateid = mysql_insert_id();
 			$adm->sessset('Record has been added', 's'); 
 		}
@@ -122,7 +128,21 @@ if(isset($id)){
 			</select>
 		</td>
 		<td width="25%"  class="label">Men of the match:</td>
-		<td width="40%"><input type="text" name="men_of_the_match"  title="over" class="txt medium" value=" " width="30%" />	</td>
+		<td width="25%"  class="label">
+			<select name="men_of_the_match" class="txt medium"   >
+			<option value="">
+					Select
+				</option>
+			<?php
+				$rsPlayer=$cms->db_query("SELECT * FROM #_player WHERE playTeams IN ('".$arrMatches[team1]."' , '".$arrMatches[team2]."') ORDER BY playerName ASC");
+				while($arrPlayer=$cms->db_fetch_array($rsPlayer)){
+			?>	 
+				<option value="<?=$arrPlayer[playerName]?>">
+					<?=$arrPlayer[playerName]?>
+				</option>
+			<?php }	?>	 
+			</select>
+		</td>
     </tr>
 	<tr>
 		<td width="25%"  class="label">Score: Team - <?=$arrMatches[team1]?></td>
@@ -145,25 +165,99 @@ if(isset($id)){
 		<td width="25%"><input type="text" name="run_in_first_over2"  title="over" class="txt medium" value=" " />	</td>
 	</tr>
 	<tr>
+		<td width="25%"  class="label">Total Fours in the Match :</td>
+		<td width="25%"><input type="text" name="total_fours"  title="over" class="txt medium" value=" " />	</td>
+		<td width="25%"  class="label">Total Sixes in the Match:</td>
+		<td width="25%"><input type="text" name="total_six"  title="over" class="txt medium" value=" " />	</td>
+	</tr>
+	<tr>
 		<td width="25%"  class="label">Winner team:</td>
-		<td width="25%"><input type="text" name="winning_team"  title="over" class="txt medium" value=" " />	</td>
+		<td width="25%"><input type="text" name="winning_team"  title="over" class="txt medium" value="" />	</td>
 		<td width="25%"  class="label">How Winning Match:</td>
 		<td width="25%"><input type="text" name="winning_status"  title="over" class="txt medium" value=" " />	</td>
     </tr>
+	<tr>
+		<td width="25%"  class="label">Highest Run Batsman :</td>
+		<td width="25%">
+			<select name="team_name_batsmen" class="txt medium" >
+				<option value="">
+					Select
+				</option>
+				<option value="<?=$arrMatches[team1]?>">
+					<?=$arrMatches[team1]?>
+				</option>
+				<option value="<?=$arrMatches[team2]?>">
+					<?=$arrMatches[team2]?>
+				</option>
+				 
+			</select>
+		</td>
+		<td width="25%"  class="label">
+			<select name="player_name_batsmen" class="txt medium"   >
+			<option value="">
+					Select
+				</option>
+			<?php
+				$rsPlayer=$cms->db_query("SELECT * FROM #_player WHERE playTeams IN ('".$arrMatches[team1]."' , '".$arrMatches[team2]."') ORDER BY playerName ASC");;
+				while($arrPlayer=$cms->db_fetch_array($rsPlayer)){
+			?>	 
+				<option value="<?=$arrPlayer[playerName]?>">
+					<?=$arrPlayer[playerName]?>
+				</option>
+			<?php }	?>	 
+			</select>
+		</td>
+		<td width="25%"><input type="text" name="heighest_run_batsmen"  title="over" class="txt medium" value=" " /></td>
+		 
+	</tr>
+	<tr>
+		<td width="25%"  class="label">Highest Wicket Bowler :</td>
+		<td width="25%">
+			<select name="team_name_bowler" class="txt medium" >
+				<option value="">
+					Select
+				</option>
+				<option value="<?=$arrMatches[team1]?>">
+					<?=$arrMatches[team1]?>
+				</option>
+				<option value="<?=$arrMatches[team2]?>">
+					<?=$arrMatches[team2]?>
+				</option>
+				 
+			</select>
+		</td>
+		<td width="25%"  class="label">
+			<select name="player_name_bowler" class="txt medium">
+			<option value="">
+					Select
+				</option>
+			<?php
+				$rsPlayer=$cms->db_query("SELECT * FROM #_player WHERE playTeams IN ('".$arrMatches[team1]."' , '".$arrMatches[team2]."') ORDER BY playerName ASC");;
+				while($arrPlayer=$cms->db_fetch_array($rsPlayer)){
+			?>	 
+				<option value="<?=$arrPlayer[playerName]?>">
+					<?=$arrPlayer[playerName]?>
+				</option>
+			<?php }	?>	 
+			</select>
+		</td>
+		<td width="25%"><input type="text" name="heighest_wicket_tacker"  title="over" class="txt medium" value=" " />	</td>
+		
+	</tr>
 </table>
 	<table width="100%" border="0" align="left" cellpadding="4" cellspacing="1" class="frm-tbl2">
-	  	<tr>
+	  	<tr style="font-size: 18px;color: gray;">
 			<?php $teamId = $cms->getSingleresult("select teamId from #_player where playTeams ='".$arrMatches[team1]."'");?>
 			<?php $teamName = $cms->getSingleresult("select name from #_team where pid='".$teamId ."'");?>
 			<td width="25%"  class="label">Team: <?=$teamName?></td>
 		</tr>
-		<tr >
+		<tr style="font-size: 15px;color: aliceblue;font-family: inherit;">
 			<th width="25%" class="heading">Batsmen Name:</th>
 			<th width="25%" class="heading">Status:</th>
-			<th width="10%" class="heading">Run:</th>
-			<th width="10%" class="heading">Ball:</th>
-			<th width="10%" class="heading">4's:</th>
-			<th width="10%" class="heading">6's:</th>
+			<th width="13%" class="heading">Run:</th>
+			<th width="13%" class="heading">Ball:</th>
+			<th width="12%" class="heading">4's:</th>
+			<th width="12%" class="heading">6's:</th>
 			 
 	</table>
 	<table width="100%" border="0" align="left" cellpadding="4" cellspacing="1" class="frm-tbl2">
@@ -174,40 +268,38 @@ if(isset($id)){
 	<tr>
 		
 		<td width="25%"  class="label">
-			<select name="player_id[]" class="txt medium">
-				<option value="">
+			<select name="player_id[]" class="txt medium" style="margin-left: 24px;width: 85%;">
+			<option value="">
 					Select
 				</option>
 			<?php
-				$rsPlayer=$cms->db_query("SELECT * FROM #_player WHERE playTeams='".$arrMatches[team1]."' ORDER BY playerName ASC");
+				$rsPlayer=$cms->db_query("SELECT * FROM #_player WHERE playTeams='".$arrMatches[team2]."' ORDER BY playerName ASC");
 				while($arrPlayer=$cms->db_fetch_array($rsPlayer)){
 			?>	 
-				<option value="<?=$arrPlayer[pid]?>" >
+				<option value="<?=$arrPlayer[pid]?>">
 					<?=$arrPlayer[playerName]?>
 				</option>
 			<?php }	?>	 
 			</select>
 		</td>
 		<td>
-			<select  class="txt medium"  name="status_batsmen[]" class="select"  title="Status" style=" width: 20%;margin-left: 62px;">
-				<option value="Not Out" <?=(($player_status=='Not Out')?'selected="selected"':'')?>>Not Out</option>
-				<option value="Out" <?=(($player_status=='Out')?'selected="selected"':'')?>>Out</option>
+			<select class="txt medium" name="status_batsmen[]" title="Status" style=" width: 20%;margin-left: 62px;">
+				<option value="Still to Bat">Still to Bat</option>
+				<option value="Not Out">Not Out</option>
+				<option value="Out">Out</option>
+				<option value="Retired Hurt">Retired Hurt</option>
 			</select>	
-			
-			<input type="text" name="run[]"  title="Run" class="txt medium" value="<?=$player_run?>" style="width: 10%;margin-left: 60px;text-align: center;"/>
-			<input type="text" name="ball[]"  title="Ball" class="txt medium" value="<?=$palyer_ball?>" style="width: 10%;margin-left: 12px;text-align: center;"/>
-			<input type="text" name="fours[]"  title="4's" class="txt medium" value="<?=$player_fours?>" style="width: 10%;margin-left: 12px;text-align: center;"/>
-			<input type="text" name="six[]"  title="6's" class="txt medium" value="<?=$player_six?>" style="width: 10%;margin-left: 12px;text-align: center;"/>
-			
+			<input type="text" name="run[]" title="Run" class="txt medium" value="" style="width: 10%;margin-left: 84px;text-align: center;">
+			<input type="text" name="ball[]" title="Ball" class="txt medium" value="" style="width: 10%;margin-left: 51px;text-align: center;">
+			<input type="text" name="fours[]" title="4's" class="txt medium" value="" style="width: 10%;margin-left: 46px;text-align: center;">
+			<input type="text" name="six[]" title="6's" class="txt medium" value="" style="width: 10%;margin-left: 41px;text-align: center;">
 		</td>
 	</tr>
 	 <?php } ?>
 	 
   </table>
   <table width="100%" border="0" align="left" cellpadding="4" cellspacing="1" class="frm-tbl2">
-	  
-		 
-		<tr >
+		<tr style="font-size: 15px;color: aliceblue;font-family: inherit;">
 			<th width="25%" class="heading">Bowler Name:</th>
 			<th width="11%" class="heading">Over:</th>
 			<th width="11%" class="heading">Maiden:</th>
@@ -227,7 +319,7 @@ if(isset($id)){
 	<tr>
 		
 		<td width="25%"  class="label">
-			<select name="player_id1[]" class="txt medium"   >
+			<select name="player_id1[]" class="txt medium" style="margin-left: 7%;width: 85%;">
 			<option value="">
 					Select
 				</option>
@@ -257,21 +349,19 @@ if(isset($id)){
   </table>
   <table width="100%" border="0" align="left" cellpadding="4" cellspacing="1" class="frm-tbl2" style="margin-top: 23px;">
 	  
-		<tr>
+		<tr style="font-size: 18px;color: gray;">
 			<?php $teamId = $cms->getSingleresult("select teamId from #_player where playTeams='".$arrMatches[team2]."'");?>
 			<?php $teamName = $cms->getSingleresult("select name from #_team where pid='".$teamId ."'");?>
 			<td width="25%"  class="label">Team: <?=$teamName?></td>
-		 
-			 
 		</tr>
 		 
-		<tr >
+		<tr style="font-size: 15px;color: aliceblue;font-family: inherit;">
 			<th width="25%" class="heading">Batsmen Name:</th>
 			<th width="25%" class="heading">Status:</th>
-			<th width="10%" class="heading">Run:</th>
-			<th width="10%" class="heading">Ball:</th>
-			<th width="10%" class="heading">4's:</th>
-			<th width="10%" class="heading">6's:</th>
+			<th width="13%" class="heading">Run:</th>
+			<th width="13%" class="heading">Ball:</th>
+			<th width="12%" class="heading">4's:</th>
+			<th width="12%" class="heading">6's:</th>
 			 
 		</tr>
 	</table>
@@ -284,7 +374,7 @@ if(isset($id)){
 	<tr>
 		
 		<td width="25%"  class="label">
-			<select name="player_id2[]"  class="txt medium"   >
+			<select name="player_id2[]" class="txt medium" style="margin-left: 24px;width: 85%;">
 			<option value="">
 					Select
 				</option>
@@ -299,16 +389,16 @@ if(isset($id)){
 			</select>
 		</td>
 		<td>
-			<select  class="txt medium"  name="status_batsmen1[]" class="select"  title="Status" style=" width: 20%;margin-left: 62px;">
-				<option value="Not Out" <?=(($player_status=='Not Out')?'selected="selected"':'')?>>Not Out</option>
-				<option value="Out" <?=(($player_status=='Out')?'selected="selected"':'')?>>Out</option>
+			<select class="txt medium" name="status_batsmen[]" title="Status" style=" width: 20%;margin-left: 62px;">
+				<option value="Still to Bat">Still to Bat</option>
+				<option value="Not Out">Not Out</option>
+				<option value="Out">Out</option>
+				<option value="Retired Hurt">Retired Hurt</option>
 			</select>	
-			
-			<input type="text" name="run1[]"  title="Run" class="txt medium" value="" style="width: 10%;margin-left: 60px;text-align: center;"/>
-			<input type="text" name="ball1[]"  title="Ball" class="txt medium" value="" style="width: 10%;margin-left: 12px;text-align: center;"/>
-			<input type="text" name="fours1[]"  title="4's" class="txt medium" value="" style="width: 10%;margin-left: 12px;text-align: center;"/>
-			<input type="text" name="six1[]"  title="6's" class="txt medium" value="" style="width: 10%;margin-left: 12px;text-align: center;"/>
-			
+			<input type="text" name="run[]" title="Run" class="txt medium" value="" style="width: 10%;margin-left: 84px;text-align: center;">
+			<input type="text" name="ball[]" title="Ball" class="txt medium" value="" style="width: 10%;margin-left: 51px;text-align: center;">
+			<input type="text" name="fours[]" title="4's" class="txt medium" value="" style="width: 10%;margin-left: 46px;text-align: center;">
+			<input type="text" name="six[]" title="6's" class="txt medium" value="" style="width: 10%;margin-left: 41px;text-align: center;">
 		</td>
 		
 	</tr>
@@ -316,9 +406,7 @@ if(isset($id)){
 	 <?php }	?>	 
   </table>
   <table width="100%" border="0" align="left" cellpadding="4" cellspacing="1" class="frm-tbl2">
-	  
-		 
-		<tr >
+		<tr style="font-size: 15px;color: aliceblue;font-family: inherit;">
 			<th width="25%" class="heading">Bowler Name:</th>
 			<th width="11%" class="heading">Over:</th>
 			<th width="11%" class="heading">Maiden:</th>
@@ -337,7 +425,7 @@ if(isset($id)){
 	<tr>
 		
 		<td width="25%"  class="label">
-			<select name="player_id3[]"  class="txt medium"   >
+			<select name="player_id3[]" class="txt medium" style="margin-left: 7%;width: 85%;">
 			<option value="">
 					Select
 				</option>

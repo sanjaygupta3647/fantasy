@@ -62,7 +62,7 @@ if(isset($id)){
 	  				<?php
 					$rsAdmin2=$cms->db_query("select pid,name from #_team where status='Active'");
 					while($arrAdmin2=$cms->db_fetch_array($rsAdmin2)){?>
-					<option value="<?=$arrAdmin2[pid]?>" <?php if($arrAdmin2[pid]==$district_id) echo'selected="selected"';?>><?=$arrAdmin2[name]?></option>
+					<option value="<?=$arrAdmin2[pid]?>" <?php if($arrAdmin2[pid]==$teamId) echo'selected="selected"';?>><?=$arrAdmin2[name]?></option>
 					<?php 
 					}
 					?></select>
@@ -85,15 +85,16 @@ if(isset($id)){
 	<tr>
 	  <td class="label">Player Profile:<span>*</span></td>
 	   <td><select  class="txt medium"  name="playerProfile" class="select" lang="R" title="Player Profile">
-	  <option value="Active" <?=(($playerProfile=='Batsman')?'selected="selected"':'')?>>Batsman</option>
-	  <option value="Inactive" <?=(($playerProfile=='Bowler')?'selected="selected"':'')?>>Bowler</option>
-	  <option value="Inactive" <?=(($playerProfile=='All Rounder')?'selected="selected"':'')?>>All Rounder</option>
-	  <option value="Inactive" <?=(($playerProfile=='Wicket Keeper/Batsman')?'selected="selected"':'')?>>Wicket Keeper/Batsman</option>
-	  <option value="Inactive" <?=(($playerProfile=='Caption/Bowler')?'selected="selected"':'')?>>Caption/Bowler</option>
-	  <option value="Inactive" <?=(($playerProfile=='Caption/All Rounder')?'selected="selected"':'')?>>Caption/All Rounder</option>
-	  <option value="Inactive" <?=(($playerProfile=='Caption/Wicket Keeper')?'selected="selected"':'')?>>Caption/Wicket Keeper</option>
-	  <option value="Inactive" <?=(($playerProfile=='Caption/Batsman')?'selected="selected"':'')?>>Caption/Batsman</option>
-	  <option value="Inactive" <?=(($playerProfile=='Caption/Wicket Keeper/Batsman')?'selected="selected"':'')?>>Caption/Wicket Keeper/Batsman</option>
+	  <option value="">Select</option>
+	  <option value="Batsman"<?=(($playerProfile=='Batsman')?'selected="selected"':'')?>>Batsman</option>
+	  <option value="Bowler"<?=(($playerProfile=='Bowler')?'selected="selected"':'')?>>Bowler</option>
+	  <option value="All Rounder"<?=(($playerProfile=='All Rounder')?'selected="selected"':'')?>>All Rounder</option>
+	  <option value="Wicket Keeper/Batsman"<?=(($playerProfile=='Wicket Keeper/Batsman')?'selected="selected"':'')?>>Wicket Keeper/Batsman</option>
+	  <option value="Caption/Bowler"<?=(($playerProfile=='Caption/Bowler')?'selected="selected"':'')?>>Caption/Bowler</option>
+	  <option value="Caption/All Rounder"<?=(($playerProfile=='Caption/All Rounder')?'selected="selected"':'')?>>Caption/All Rounder</option>
+	  <option value="Caption/Wicket Keeper"<?=(($playerProfile=='Caption/Wicket Keeper')?'selected="selected"':'')?>>Caption/Wicket Keeper</option>
+	  <option value="Caption/Batsman"<?=(($playerProfile=='Caption/Batsman')?'selected="selected"':'')?>>Caption/Batsman</option>
+	  <option value="Caption/Wicket Keeper/Batsman"<?=(($playerProfile=='Caption/Wicket Keeper/Batsman"')?'selected="selected"':'')?>>Caption/Wicket Keeper/Batsman</option>
 	  </select>	  </td>
     </tr>
 	

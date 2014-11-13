@@ -43,11 +43,11 @@
 ?>
   <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0"  class="data-tbl">
     <tr class="t-hdr">
-      <td width="6%" align="center"><?=$adm->orders('#',false)?></td>
-      <td width="6%" align="center" valign="middle"><?=$adm->check_all()?></td>
-      <td width="15%" align="center"><?=$adm->orders('Prediction',true)?></td>   
+      <td width="10%" align="center"><?=$adm->orders('#',false)?></td>
+      <td width="10%" align="center" valign="middle"><?=$adm->check_all()?></td>
+      <td width="20%" align="center"><?=$adm->orders('Prediction',true)?></td>   
 	  <td width="15%" align="center"><?=$adm->orders('Prediction Points',true)?></td>   
-	  <td width="20%" align="center"><?=$adm->orders('Prediction Gift',true)?></td>   
+	  
 	  <td width="15%" align="center"><?=$adm->orders('Status',true)?></td>
       <td width="12%" align="center"><?=$adm->norders('Action')?></td>
     </tr>
@@ -57,8 +57,7 @@
     <td align="center"><?=$adm->check_input($pid)?></td>
     <td align="center"><?=$prediction?></td>
     <td align="center"><?=$prediction_points?></td>
-	<td align="center" ><?=$prediction_gift?></td>
-     <td align="center" class="<?=strtolower($status)?>"><?=$status?></td>
+	<td align="center" class="<?=strtolower($status)?>"><?=$status?></td>
 	<td align="center"><?=$adm->action(SITE_PATH_ADM.CPAGE."?mode=add",$pid)?></td>
     </tr>
     <?php $nums++;}}else{ echo $adm->rowerror(7);}?>   

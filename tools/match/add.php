@@ -4,7 +4,7 @@
 if($cms->is_post_back()){
 	$cms->createXmlFile();
 	$_POST[title] = $_POST[match_num]." ".$_POST[type]." - ".$_POST[team1]." vs ".$_POST[team2];
-	$_POST[url] = $adm->baseurl($_POST[title])."-live-streaming";
+	//$_POST[url] = $adm->baseurl($_POST[title])."-live-streaming";
 	if($d<10) {$d = "0".$d;   }
 	if($m<10) {$m = "0".$m;  }
 	if($m<10) {$h = "0".$h;  }

@@ -58,7 +58,7 @@
       <td width="6%" align="center" valign="middle"><?=$adm->check_all()?></td>
       <td width="20%" align="center"><?=$adm->orders('Title',true)?></td>   
 	  <td width="20%" align="center"><?=$adm->orders('Series',true)?></td>
-	  <td width="10%" align="center"><?=$adm->orders('Channel',true)?></td>
+	 
 	  <td width="10%" align="center"><?=$adm->orders('Time',true)?></td>   
 	  <td width="5%" align="center"><?=$adm->orders('Status',true)?></td>
       <td width="12%" align="center"><?=$adm->norders('Action')?></td>
@@ -67,9 +67,9 @@
     <tr <?=$adm->even_odd($nums)?>>
     <td align="center"><?=$nums?></td>
     <td align="center"><?=$adm->check_input($pid)?></td>
-    <td align="center"><?=$title?></td> 
+    <td align="center"><a href="<?=SITE_PATH."tools/team_wizzard?mode=add&match_id=".$pid?>"><?=$title?></a></td> 
 	<td align="center"><?=$cms->getSingleresult("select title from #_series where pid = '$series_id'")?></td>
-	<td align="center"><?=$cms->getSingleresult("select channelTitle from #_channel where pid = '$channel_id'")?></td>
+	 
      <td align="center" ><?=date("d M, Y",strtotime($match_date))?></td>
      <td align="center" class="<?=strtolower($status)?>"><?=$status?></td>
 	<td align="center"><?=$adm->action(SITE_PATH_ADM.CPAGE."?mode=add",$pid)?></td>

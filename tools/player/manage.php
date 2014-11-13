@@ -64,10 +64,11 @@
 		<img src="<?=SITE_PATH?>uploaded_files/orginal/<?=$playerImage?>" height="75">
 	 <?}else echo "N/A"; 
 	 ?></td>
-     <td align="center" ><?=$teamId?></td>
+     <td align="center" ><?php  $teamName = $cms->getSingleresult("SELECT name FROM #_team WHERE pid = '".$teamId."'"); ?><?=$teamName?></td>
 	 <td align="center"><?php
-	 if($playerImage and is_file($_SERVER['DOCUMENT_ROOT'].SITE_SUB_PATH."uploaded_files/orginal/".$playerImage)==true){?>
-		<img src="<?=SITE_PATH?>uploaded_files/orginal/<?=$playerImage?>" height="75">
+	 $teamImage = $cms->getSingleresult("SELECT image FROM #_team WHERE pid = '".$teamId."'");
+	 if($teamImage and is_file($_SERVER['DOCUMENT_ROOT'].SITE_SUB_PATH."uploaded_files/orginal/".$teamImage)==true){?>
+		<img src="<?=SITE_PATH?>uploaded_files/orginal/<?=$teamImage?>" height="75">
 	 <?}else echo "N/A"; 
 	 ?></td>
 	 <td align="center" ><?=$age?></td>
