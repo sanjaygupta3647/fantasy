@@ -1,4 +1,5 @@
 <?php include("../../lib/opin.inc.php")?>
+ 
 <?php include("../inc/header.inc.php");?>
 <div class="main">
 <?php include "../inc/header2.php"; ?>
@@ -6,10 +7,10 @@
 <div class="div-tbl">
 <div class="cl"></div>
 	<? //$adm->h1_tag('Dashboard &rsaquo; Email Alerts Manager',((!$mode)?$others:$others2))?>
-<?php $hedtitle = "Player Manager"; ?>  
+<?php $hedtitle = "User Manager"; ?>  
     <?=$adm->alert()?>
       <div class="title"  id="innertit">
-       <?$adm->heading(((!$mode)?'Player Manager':'Add/Update Team'))?>
+       <?$adm->heading(((!$mode)?'User Manager':'Add/Update User'))?>
         </div>
       <div class="tbl-contant"><?php if($mode){include("add.php");}else{include("manage.php");}?></div>  
        <div class="cl"></div>

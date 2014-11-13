@@ -68,12 +68,12 @@
 	define('SITE_MAIL', $cms->getSingleresult("select email from #_setting where `id`='1'"));
 	define('SITE_PHONE', $cms->getSingleresult("select phone from #_setting where `id`='1'"));
 	define('COMP_NAME', $cms->getSingleresult("select company from #_setting where `id`='1'"));
-	define('SITE_ADDR', $cms->getSingleresult("select address from #_setting where `id`='1'"));
+	define('SITE_ADDR', $cms->getSingleresult("select address from #_setting where `id`='1'"));*/
 	
 	$month = array (1=>"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
  	$folder_array = explode("/", $_SERVER['REQUEST_URI']);
 	define("CPAGE",$folder_array[sizeof($folder_array)-2]);
-	$SITE_conts = $cms->db_query("select * from ".tb_Prefix."setting where id='1'");
+	/*$SITE_conts = $cms->db_query("select * from ".tb_Prefix."setting where id='1'");
 	$SITE_CONTF = $cms->db_fetch_array($SITE_conts); 
 	$results=$cms->db_query("select url from #_series  group by url ");
 	while($ress=mysql_fetch_array($results)){ extract($ress); 
