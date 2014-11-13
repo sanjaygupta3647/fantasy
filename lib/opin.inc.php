@@ -32,8 +32,8 @@
 	$tmp = substr($tmp, 0, strrpos($tmp, '/'));
 	define('SITE_FS_PATH', $tmp); 
 	
-	define('_JEXEC', $tmp); 
-	
+	define('_JEXEC', $tmp);  
+	 
 	require_once(SITE_FS_PATH."/lib/config.inc.php");
 	require_once(SITE_FS_PATH."/lib/funcs_lib.inc.php");
 	require_once(SITE_FS_PATH."/lib/funcs_extra.inc.php");

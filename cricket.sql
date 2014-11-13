@@ -17,78 +17,12 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `cricket`
+-- Database: `fantacy`
 --
-CREATE DATABASE IF NOT EXISTS `cricket` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `cricket`;
+CREATE DATABASE IF NOT EXISTS `fantacy` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `fantacy`;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `pro_administrator`
---
-
-CREATE TABLE IF NOT EXISTS `pro_administrator` (
-  `aid` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `ausername` varchar(255) DEFAULT NULL,
-  `afname` varchar(255) NOT NULL,
-  `alname` varchar(255) NOT NULL,
-  `aemail` varchar(255) DEFAULT NULL,
-  `apassword` varchar(255) NOT NULL,
-  `atype` enum('su','admin','user') DEFAULT 'admin',
-  `astatus` enum('Active','Inactive') DEFAULT 'Active',
-  `submitdate` int(10) NOT NULL,
-  PRIMARY KEY (`aid`),
-  UNIQUE KEY `username` (`ausername`),
-  KEY `first_name` (`afname`),
-  KEY `last_name` (`alname`),
-  KEY `password` (`apassword`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=29 ;
-
---
--- Dumping data for table `pro_administrator`
---
-
-INSERT INTO `pro_administrator` (`aid`, `ausername`, `afname`, `alname`, `aemail`, `apassword`, `atype`, `astatus`, `submitdate`) VALUES
-(17, 'adm', 'admin', 'admin', 'info@abc.com', 'ZGVtb2RlbW8=', 'su', 'Active', 0),
-(22, 'admin', 'admin', '!!', 'admin@aa.com', 'ZGVtb2RlbW8=', 'admin', 'Active', 1374082124),
-(28, 'user2', 'abc', 'abc', 'abc@gmail.com', 'ZGVtbw==', 'user', 'Active', 1376948487);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `pro_batsmen`
---
-
-CREATE TABLE IF NOT EXISTS `pro_batsmen` (
-  `pid` int(10) NOT NULL AUTO_INCREMENT,
-  `player_id` int(11) NOT NULL,
-  `player_status` enum('Not Out','Out') NOT NULL DEFAULT 'Not Out',
-  `player_run` int(10) NOT NULL,
-  `palyer_ball` int(10) NOT NULL,
-  `player_fours` int(3) NOT NULL,
-  `player_six` int(3) NOT NULL,
-  `match_id` int(10) DEFAULT NULL,
-  `series_id` int(10) NOT NULL,
-  `time_stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`pid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
-
---
--- Dumping data for table `pro_batsmen`
---
-
-INSERT INTO `pro_batsmen` (`pid`, `player_id`, `player_status`, `player_run`, `palyer_ball`, `player_fours`, `player_six`, `match_id`, `series_id`, `time_stamp`) VALUES
-(1, 15, 'Out', 65, 65, 5, 4, 1, 53, '2014-11-11 09:35:10'),
-(2, 38, 'Out', 23, 33, 2, 1, 1, 53, '2014-11-11 09:35:10'),
-(3, 15, 'Out', 65, 65, 5, 4, 1, 53, '2014-11-11 09:35:24'),
-(4, 38, 'Out', 23, 33, 2, 1, 1, 53, '2014-11-11 09:35:24'),
-(5, 10, 'Out', 55, 45, 8, 1, 1, 53, '2014-11-11 09:35:24'),
-(6, 37, 'Out', 34, 43, 2, 2, 1, 53, '2014-11-11 09:35:24'),
-(7, 7, 'Not Out', 111, 100, 12, 2, 1, 53, '2014-11-11 09:35:24'),
-(8, 27, 'Not Out', 54, 34, 2, 3, 1, 53, '2014-11-11 09:35:25'),
-(9, 16, 'Not Out', 120, 68, 15, 9, 1, 53, '2014-11-11 09:35:25'),
-(10, 24, 'Not Out', 34, 43, 2, 1, 1, 53, '2014-11-11 09:35:25');
+ 
 
 -- --------------------------------------------------------
 
