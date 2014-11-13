@@ -33,10 +33,10 @@
 	define('UP_FILES_FS_PATHPC', SITE_FS_PATH.'/uploads');
 	define('UP_FILES_WS_PATH', SITE_WS_PATH.'/uploaded_files');
 
-	define('SITE_NAME', 'Property');
+	define('SITE_NAME', 'Fantasy');
 	
 	define('CUR', '&#x20AC;');
-	define('SITE_TITLE', SITE_NAME.' Property');
+	define('SITE_TITLE', SITE_NAME.' Fantasy');
 	
 	define('DEF_PAGE_SIZE', 25);
 	define('FRO_PAGE_SIZE', 10);

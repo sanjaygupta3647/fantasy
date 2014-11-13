@@ -16,14 +16,11 @@ ob_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
+<head>
 <title>%%title%%</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
-<link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" />
-<!-- Start: Meta Info -->
-<!--<meta property="og:image" content="" />-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 <meta name="DC.title" content="%%title%%" />
 <meta name="DC.creator" content="Fizzkart CDI" />
@@ -51,19 +48,15 @@ ob_start();
 </div> 
 <body>
 <div id="sb-site">
-<div class="boxed">
-<?php include "header.php"; ?>
-  
- <?php include_once $loadpage; ?> 
- <!-- footer-widgets -->
-<?php include "footer.php"; ?>  
-</div> <!-- boxed -->
-</div> <!-- sb-site -->
-
+	<div class="boxed">
+		<?php include "header.php"; ?> 
+		<?php include_once $loadpage; ?>  
+		<?php include "footer.php"; ?>  
+	</div> 
+</div>  
 <div id="back-top">
     <a href="#header"><i class="fa fa-chevron-up"></i></a>
 </div>
-<!-- Scripts -->
 <?php include_once "common_js.php"; ?> 
 </body> 
 </html>
