@@ -35,7 +35,7 @@
 	define('_JEXEC', $tmp); 
 	
 	require_once(SITE_FS_PATH."/lib/config.inc.php");
-	/*require_once(SITE_FS_PATH."/lib/funcs_lib.inc.php");
+	require_once(SITE_FS_PATH."/lib/funcs_lib.inc.php");
 	require_once(SITE_FS_PATH."/lib/funcs_extra.inc.php");
 	if(stristr($_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"], 'member') === FALSE) {
     require_once(SITE_FS_PATH."/lib/adminfunction.inc.php");
