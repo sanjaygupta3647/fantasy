@@ -273,7 +273,7 @@ if(isset($id)){
 					Select
 				</option>
 			<?php
-				$rsPlayer=$cms->db_query("SELECT * FROM #_player WHERE playTeams='".$arrMatches[team2]."' ORDER BY playerName ASC");
+				$rsPlayer=$cms->db_query("SELECT * FROM #_player WHERE playTeams='".$arrMatches[team1]."' ORDER BY playerName ASC");
 				while($arrPlayer=$cms->db_fetch_array($rsPlayer)){
 			?>	 
 				<option value="<?=$arrPlayer[pid]?>">
