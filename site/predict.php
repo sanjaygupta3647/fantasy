@@ -129,13 +129,18 @@ $arrAdmin=$cms->db_fetch_array($rsAdmin);
             <span id="bx-prev4"> <a class="bx-prev" href="">&lt;</a></span>
             <span id="bx-next4"> <a class="bx-next" href="">&gt;</a></span>
         </div>
-       
-       <div style="max-width: 1130px; margin: 0px auto;" class="bx-wrapper">
-       <div style="width: 100%; overflow: hidden; position: relative; height: 100px; padding-left: 63px; border-bottom: 1px solid #CCC;" class="bx-viewport">
-       <div style="max-width: 1762px; margin: 0px auto;" class="bx-wrapper"><div style="width: 100%; overflow: hidden; position: relative; height: 104px;" class="bx-viewport"><ul style="width: 2215%; position: relative; transition-duration: 0s; transform: translate3d(-1832px, 0px, 0px);" class="center" id="latest-works"><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
+      
+            <ul style="width: 1415%; position: relative; transition-duration: 0s; transform: translate3d(-1180px, 0px, 0px);" class="center" id="latest-works">
+				<?php
+					$getGifts = $cms->db_query("SELECT * FROM #_gift WHERE status = 'Active'");
+					while($arrGift = $cms->db_fetch_array($getGifts)){
+				?>
+				  <li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
+					<div class="img-caption-ar"> <label for="gift" style="margin-left: 12px;"><?=$arrGift[giftName]?> </label></br><label for="points"><?=$arrGift[get_points]?> Points</label> </div>
+				  </li>
+				<?php } ?>
+				</ul>
+			<!--
         </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
             <div class="img-caption-ar">
                 <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
@@ -342,7 +347,7 @@ $arrAdmin=$cms->db_fetch_array($rsAdmin);
        
        
        
-       
+       -->
         </div>
 
 
