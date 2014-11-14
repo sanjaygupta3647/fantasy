@@ -105,10 +105,12 @@
 <p style="color: rgb(255, 255, 255); font-size:18px; padding-top: 8px; text-align: center;">TESTIMONIALS</p>
 <marquee  onMouseOver="this.scrollAmount=0" onMouseOut="this.scrollAmount=2" scrollamount="2" direction="up" loop="true" width="100%" height="350">
 <center>
-
-<p style="color: rgb(255, 255, 255); padding: 8px; text-align: justify;">Lorem ipsum Ex aliqua tempor nisi laboris dolor id laborum irure minim tempor in sit dolore amet sit esse nostrud tempor nulla consequat aute in nostrud laboris sint ullamco amet nisi pariatur officia nulla pariatur in id et labore dolore ad sit.Lorem ipsum Ex aliqua tempor nisi laboris dolor id laborum irure minim </p>
-<p style="color: rgb(255, 255, 255); padding: 8px; text-align: justify;">Lorem ipsum Ex aliqua tempor nisi laboris dolor id laborum irure minim tempor in sit dolore amet sit esse nostrud tempor nulla consequat aute in nostrud laboris sint ullamco amet nisi pariatur officia nulla pariatur in id et labore dolore ad sit.Lorem ipsum Ex aliqua tempor nisi laboris dolor id laborum irure minim </p>
-
+<?php 
+$rsAdmin=$cms->db_query("SELECT * FROM #_testimonials WHERE id='1' AND status='Active'");
+$arrAdmin=$cms->db_fetch_array($rsAdmin);
+@extract($arrAdmin);
+?>
+<p><?=$arrAdmin[testimonials]?></p>
 </center>
 </marquee>
 </div>

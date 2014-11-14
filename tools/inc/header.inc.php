@@ -49,10 +49,14 @@ if(!$_SESSION["ses_adm_id"]){$cms->redir(SITE_PATH_ADM."login");die;}
   </div>
   <div class="aside">
     <ul class="nav2"> 
-       
-     
- 	 
-      <li><a href="#">Series Management</a>
+       <li><a href="#">Content</a>
+        <div class="ul-arrow">
+          <ul> 
+             <li><a href="<?=SITE_PATH_ADM?>testimonials.php?mode=true">Testimonials</a></li>
+           </ul>
+        </div> 
+	  </li>
+		<li><a href="#">Series Management</a>
         <div class="ul-arrow">
           <ul> 
              <li><a href="<?=SITE_PATH_ADM?>series/?mode=add">Add Series</a></li>
@@ -84,14 +88,26 @@ if(!$_SESSION["ses_adm_id"]){$cms->redir(SITE_PATH_ADM."login");die;}
             <li><a href="<?=SITE_PATH_ADM?>player/">Manage Player</a></li> 
           </ul>
         </div> </li>
-		<li><a href="#">Prediction Management</a>
-        <div class="ul-arrow">
-          <ul>
-           
-             <li><a href="<?=SITE_PATH_ADM?>prediction/?mode=add">Add Prediction</a></li>
-            <li><a href="<?=SITE_PATH_ADM?>prediction/">Manage Prediction</a></li> 
-          </ul>
-        </div> </li>
+		<li>
+			<a href="#">Prediction Management</a>
+			<div class="ul-arrow">
+			  <ul>
+			   
+				 <li><a href="<?=SITE_PATH_ADM?>prediction/?mode=add">Add Prediction</a></li>
+				<li><a href="<?=SITE_PATH_ADM?>prediction/">Manage Prediction</a></li> 
+			  </ul>
+			</div> 
+		</li>
+		<li>
+			<a href="#">Gift Management</a>
+			<div class="ul-arrow">
+			  <ul>
+			   
+				 <li><a href="<?=SITE_PATH_ADM?>gift/?mode=add">Add Gift</a></li>
+				<li><a href="<?=SITE_PATH_ADM?>gift/">Manage Gift</a></li> 
+			  </ul>
+			</div> 
+		</li>
 		 <li><a href="#">News Management</a>
         <div class="ul-arrow">
           <ul>

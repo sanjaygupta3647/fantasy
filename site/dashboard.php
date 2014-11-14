@@ -20,6 +20,7 @@ $arrDetail = $cms->db_fetch_array($arrCheck);
 
 <div class="scord">
 <ul>
+<li><a href="#">My Profile</a></li>
 <li><a href="#">Score Board</a></li>
 <li><a href="#">Prizes</a></li>
 <li><a href="#">Winners</a></li>

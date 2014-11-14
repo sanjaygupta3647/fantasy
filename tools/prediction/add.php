@@ -27,10 +27,10 @@ if(isset($id)){
 				<option value="">Select</option>
 				<option value="Team Win" <?=(($prediction=='Team Win')?'selected="selected"':'')?>>Team Win</option>
 				<option value="Team Wins Toss" <?=(($prediction=='Team Wins Toss')?'selected="selected"':'')?>>Team Wins Toss</option>
-				<option value="Runs scored in 1st over" <?=(($prediction=='Runs scored in 1st over')?'selected="selected"':'')?>>Runs scored in 1st over</option>
+				<option value="Runs in 1st over" <?=(($prediction=='Runs in 1st over')?'selected="selected"':'')?>>Runs scored in 1st over</option>
 				<option value="Man of the Match" <?=(($prediction=='Man of the Match')?'selected="selected"':'')?>>Man of the Match</option>
-				<option value="Total Score by (Team1)" <?=(($prediction=='Total Score by (Team1)')?'selected="selected"':'')?>>Total Score by (Team1)</option>
-				<option value="Total Score by (Team2)" <?=(($prediction=='Total Score by (Team2)')?'selected="selected"':'')?>>Total Score by (Team2)</option>
+				<option value="Total Score Team1" <?=(($prediction=='Total Score Team1')?'selected="selected"':'')?>>Total Score by (Team1)</option>
+				<option value="Total Score Team2" <?=(($prediction=='Total Score Team2')?'selected="selected"':'')?>>Total Score by (Team2)</option>
 				</select>
 		</td>
     </tr>

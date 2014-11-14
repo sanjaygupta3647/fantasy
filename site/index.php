@@ -1,4 +1,4 @@
-<?php  
+<?php 
 if($cms->is_post_back()){
 	$rsCheck = $cms->db_query("select * from #_user where userName='".trim($_POST[userName])."' and password='". base64_encode(trim($_POST[password]))."' and status='Active'");
 	if(mysql_num_rows($rsCheck)){
@@ -343,6 +343,9 @@ if($cms->is_post_back()){
         </div>
       </div>
       <div class="col-lg-3">
+		<?php
+		
+		?>
         <p class="top_new2"> <img src="<?=SITE_PATH?>images/lock.png" align="left"><span style="padding-left: 7px;">PAKISTAN V AUSTRALIA<br>
           <span style="font-size:11px; padding-left: 7px;">TESTS</span></span> </p>
         <div class="box_2">

@@ -1,3 +1,8 @@
+<?php
+$rsAdmin=$cms->db_query("SELECT * FROM #_setting WHERE id='1'");
+$arrAdmin=$cms->db_fetch_array($rsAdmin);
+@extract($arrAdmin); 
+?>
 <header id="header-full-top" class="hidden-xs header-full">
     <div class="container">
         <div class="header-full-title">
@@ -5,18 +10,15 @@
         </div>
         <nav class="top-nav">
             <ul class="top-nav-social hidden-sm">
-                <li><a href="#" class="animated fadeIn animation-delay-7 twitter"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#" class="animated fadeIn animation-delay-8 facebook"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#" class="animated fadeIn animation-delay-9 googleplus"><i class="fa fa-google-plus"></i></a></li>
-  
-                <li><a href="#" class="animated fadeIn animation-delay-7 linkedin"><i class="fa fa-linkedin"></i></a></li>
+                <li><a href="<?=$arrAdmin[tw]?>" target="_blank" class="animated fadeIn animation-delay-7 twitter"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="<?=$arrAdmin[fb]?>" target="_blank" class="animated fadeIn animation-delay-8 facebook"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="<?=$arrAdmin[gp]?>" target="_blank" class="animated fadeIn animation-delay-9 googleplus"><i class="fa fa-google-plus"></i></a></li>
+                <li><a href="<?=$arrAdmin[lin]?>" target="_blank" class="animated fadeIn animation-delay-7 linkedin"><i class="fa fa-linkedin"></i></a></li>
             </ul>
-
             <div class="dropdown animated fadeInDown animation-delay-11">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Register</a>|
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Faq's</a>|
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contact Us</a>
-                
+                <a href="<?=SITE_PATH?>register" class="dropdown-toggle" data-toggle="dropdown">Register</a>|
+                <a href="<?=SITE_PATH?>faq" class="dropdown-toggle" data-toggle="dropdown">Faq's</a>|
+                <a href="<?=SITE_PATH?>contact-us" class="dropdown-toggle" data-toggle="dropdown">Contact Us</a>
             </div>
       
         </nav>
@@ -96,7 +98,7 @@
                      
                 </li>
                 <li>
-                    <a href="#">Terms and Conditions</a>
+                    <a href="<?=SITE_PATH?>term-condition">Terms and Conditions</a>
                      
                 </li>
                 
