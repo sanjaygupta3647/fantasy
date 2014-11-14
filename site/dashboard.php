@@ -1,8 +1,13 @@
+<?php
+$arrCheck = $cms->db_query("SELECT * FROM #_user WHERE pid = '".$_SESSION['pid']."' AND userName = '".$_SESSION['userName']."'");
+$arrDetail = $cms->db_fetch_array($arrCheck);
+//print_r($arrDetail);
+?>
 <div class="container">
 <div class="row" style="margin-top: 40px;">
 
 <div class="col-md-3" style="border: 1px solid rgb(236, 236, 236);">
-<span style="padding-left: 15px;"><strong>Naresh Kumar</strong></span>
+<span style="padding-left: 15px;"><strong><?=strtoupper($_SESSION['userName'])?></strong></span>
 <div class="points">
 <span class="points_img"><img src="images/pointss.jpg"></span>
 

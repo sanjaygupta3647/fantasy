@@ -3,7 +3,12 @@ if($cms->is_post_back()){
 	$rsCheck = $cms->db_query("select * from #_user where userName='".trim($_POST[userName])."' and password='". base64_encode(trim($_POST[password]))."' and status='Active'");
 	if(mysql_num_rows($rsCheck)){
 		$arrCheck = $cms->db_fetch_array($rsCheck);
-		echo $arrCheck[userName];
+		if($arrCheck[status] == 'Active'){ 
+			$_SESSION['pid'] = $arrCheck[pid];
+			$_SESSION['userName'] = $arrCheck[userName];
+			$_SESSION['email'] = $arrCheck[emailId];
+			header("Location:".SITE_PATH."dashboard"); 
+		}
 	}
 	else {
 		$postmsg = '<p style="color:#FF0000">Invalid User Name Or Password!.</p>';
@@ -37,15 +42,15 @@ if($cms->is_post_back()){
             <div class="col-md-6 col-sm-5 hidden-xs carousel-img-wrap">
               <div class="main_tab">
                 <ul class="nav nav-tabs nav-tabs-ar nav-tabs-ar-white">
-                  <li class="active"><a href="#home2" data-toggle="tab">Sign In</a></li>
-                  <li><a href="#profile2" data-toggle="tab">Register</a></li>
+                  <li class="active"><a href="<?=SITE_PATH?>" data-toggle="tab">Sign In</a></li>
+                  <li><a href="<?=SITE_PATH?>register" data-toggle="tab">Register</a></li>
                 </ul>
                 
                 <!-- Tab panes -->
                 <div class="tab-content">
 				<form action="" method="post">
                   <div class="tab-pane active" id="home2">
-                    <p><a href="#"><img src="<?=SITE_PATH?>images/facebook.jpg"></a> <a href="#"><img src="<?=SITE_PATH?>images/twitter.jpg"></a></p>
+                    <p><a href="<?=SITE_PATH?>fbconfig"><img src="<?=SITE_PATH?>images/facebook.jpg"></a> <a href="#"><img src="<?=SITE_PATH?>images/twitter.jpg"></a></p>
                     <div class="form-group">
                       <div class="input-group login-input"> <span class="input-group-addon"><i class="fa fa-user"></i></span>
                         <input class="form-control" placeholder="User Name" type="text" name="userName">
@@ -62,7 +67,7 @@ if($cms->is_post_back()){
                     </div>
                   </div>
 				  </form>
-                  <div class="tab-pane" id="profile2">
+                 <!-- <div class="tab-pane" id="profile2">
                     <form role="form">
                       <div class="form-group">
                         <label for="InputUserName">User Name<sup>*</sup></label>
@@ -87,7 +92,7 @@ if($cms->is_post_back()){
                         </div>
                       </div>
                     </form>
-                  </div>
+                  </div>-->
                 </div>
               </div>
             </div>
@@ -105,23 +110,31 @@ if($cms->is_post_back()){
           <p class="em-danger-inverse">Predict</p>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6">
-        <div class="content-box box-default animated fadeInUp animation-delay-14"> <span class="icon-ar icon-ar-lg icon-ar-round icon-ar-inverse"><img src="<?=SITE_PATH?>images/box_icon2.png"></span>
-          <p class="em-danger-inverse">Correct prediction</p>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-6">
+	  <div class="col-md-3 col-sm-6">
         <div class="content-box box-default animated fadeInUp animation-delay-16"> <span class="icon-ar icon-ar-lg icon-ar-round icon-ar-inverse"><img src="<?=SITE_PATH?>images/box_icon3.png"></span>
           <p class="em-danger-inverse">Win Points</p>
         </div>
       </div>
       <div class="col-md-3 col-sm-6">
-        <div class="content-box box-default animated fadeInUp animation-delay-12" style="background-image: none;">
-          <p class="em-primary-inverse">Team win = 100 points</p>
-          <p class="em-info-inverse">Total score = 400 points</p>
-          <p class="em-primary-inverse">Players score = 600 points</p>
-          <p class="em-royal-inverse">Redeem points</p>
+        <div class="content-box box-default animated fadeInUp animation-delay-14"> <span class="icon-ar icon-ar-lg icon-ar-round icon-ar-inverse"><img src="<?=SITE_PATH?>images/box_icon2.png"></span>
+          <p class="em-danger-inverse">Redeem Free Gifts</p>
         </div>
+      </div>
+      
+      <div class="col-md-3 col-sm-6">
+        <div class="content-box box-default animated fadeInUp animation-delay-12" style="background-image: none;width:auto;">
+			<?php
+				$getPoints = $cms->db_query("SELECT * FROM #_prediction WHERE status = 'Active' ORDER BY prediction_points DESC LIMIT 5");
+				while($arrPoint = $cms->db_fetch_array($getPoints)){
+			?>
+			<p class="em-primary-inverse"><?=$arrPoint[prediction]?> = <?=$arrPoint[prediction_points]?> Points</p>
+			<?php } ?>
+			<!--
+			<p class="em-primary-inverse">Players score = 600 points</p>
+			<p class="em-info-inverse">Total score = 400 points</p>
+			<p class="em-primary-inverse">Players score = 600 points</p>
+			<p class="em-info-inverse">Total score = 400 points</p>-->
+		</div>
       </div>
     </div>
   </div>
@@ -201,7 +214,7 @@ if($cms->is_post_back()){
         </div>
       </div>
       <div class="col-md-4" style="border-bottom: 1px solid rgb(204, 204, 204); padding-bottom: 11px;">
-        <p class="em-warning-inverse"><a href="#" style="color:#FFFFFF;">Register Now (its free)</a></p>
+        <p class="em-warning-inverse"><a href="<?=SITE_PATH?>register" style="color:#FFFFFF;">Register Now (its free)</a></p>
         <p style="padding-top: 20px;"> <span style="color:#01478f;  font-size: 24px;">119,681</span><span style="padding-left:13px; font-size: 12px;"> posted in past 3 days</span></p>
         <p><span style="color:#01478f; font-size: 24px;">$119,681</span><span style="padding-left:13px; font-size: 12px;">earned through Elance to date</span></p>
       </div>

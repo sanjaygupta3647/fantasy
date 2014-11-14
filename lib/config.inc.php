@@ -4,16 +4,16 @@
 	}
 	if (LOCAL_MODE) { 
 		$ARR_CFGS["db_host"] = 'localhost';
-		$ARR_CFGS["db_name"] = 'fantasy'; 
+		$ARR_CFGS["db_name"] = 'cricket'; 
     	$ARR_CFGS["db_user"] = 'root';
 		$ARR_CFGS["db_pass"] = '';
 		define('SITE_SUB_PATH', '/fantasy/trunk/');		
 	} else { 
 		$ARR_CFGS["db_host"] = 'localhost';
-		$ARR_CFGS["db_name"] = 'cricw_match'; 
-    	$ARR_CFGS["db_user"] = 'cricw_match';
-		$ARR_CFGS["db_pass"] = 'demodemo2';
-		define('SITE_SUB_PATH', '/');
+		$ARR_CFGS["db_name"] = 'secondse_fantsy'; 
+    	$ARR_CFGS["db_user"] = 'secondse_fantasy';
+		$ARR_CFGS["db_pass"] = 'demo@1212';
+		define('SITE_SUB_PATH', '/fantasy/');
 	}
 	
 	$tmp = dirname(__FILE__);

@@ -1,7 +1,7 @@
 <header id="header-full-top" class="hidden-xs header-full">
     <div class="container">
         <div class="header-full-title">
-      <a href="#"><img src="<?=SITE_PATH?>images/logo.jpg"></a>
+      <a href="<?=SITE_PATH?>"><img src="<?=SITE_PATH?>images/logo.jpg"></a>
         </div>
         <nav class="top-nav">
             <ul class="top-nav-social hidden-sm">

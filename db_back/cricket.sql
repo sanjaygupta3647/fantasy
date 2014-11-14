@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 12, 2014 at 05:19 AM
+-- Generation Time: Nov 14, 2014 at 09:07 AM
 -- Server version: 5.6.12-log
 -- PHP Version: 5.4.12
 
@@ -17,12 +17,62 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `fantacy`
+-- Database: `cricket`
 --
-CREATE DATABASE IF NOT EXISTS `fantacy` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `fantacy`;
+CREATE DATABASE IF NOT EXISTS `cricket` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `cricket`;
 
- 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pro_administrator`
+--
+
+CREATE TABLE IF NOT EXISTS `pro_administrator` (
+  `aid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `ausername` varchar(255) DEFAULT NULL,
+  `afname` varchar(255) NOT NULL,
+  `alname` varchar(255) NOT NULL,
+  `aemail` varchar(255) DEFAULT NULL,
+  `apassword` varchar(255) NOT NULL,
+  `atype` enum('su','admin','user') DEFAULT 'admin',
+  `astatus` enum('Active','Inactive') DEFAULT 'Active',
+  `submitdate` int(10) NOT NULL,
+  PRIMARY KEY (`aid`),
+  UNIQUE KEY `username` (`ausername`),
+  KEY `first_name` (`afname`),
+  KEY `last_name` (`alname`),
+  KEY `password` (`apassword`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=29 ;
+
+--
+-- Dumping data for table `pro_administrator`
+--
+
+INSERT INTO `pro_administrator` (`aid`, `ausername`, `afname`, `alname`, `aemail`, `apassword`, `atype`, `astatus`, `submitdate`) VALUES
+(17, 'adm', 'admin', 'admin', 'info@abc.com', 'ZGVtb2RlbW8=', 'su', 'Active', 0),
+(22, 'admin', 'admin', '!!', 'admin@aa.com', 'ZGVtb2RlbW8=', 'admin', 'Active', 1374082124),
+(28, 'user2', 'abc', 'abc', 'abc@gmail.com', 'ZGVtbw==', 'user', 'Active', 1376948487);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pro_batsmen`
+--
+
+CREATE TABLE IF NOT EXISTS `pro_batsmen` (
+  `pid` int(10) NOT NULL AUTO_INCREMENT,
+  `player_id` int(11) NOT NULL,
+  `player_status` enum('Still to Bat','Not Out','Out','Retired Hurt') NOT NULL DEFAULT 'Still to Bat',
+  `player_run` int(10) NOT NULL,
+  `palyer_ball` int(10) NOT NULL,
+  `player_fours` int(3) NOT NULL,
+  `player_six` int(3) NOT NULL,
+  `match_id` int(10) DEFAULT NULL,
+  `series_id` int(10) NOT NULL,
+  `time_stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`pid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -44,21 +94,7 @@ CREATE TABLE IF NOT EXISTS `pro_bowlers` (
   `series_id` int(10) DEFAULT NULL,
   `time_stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`pid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
-
---
--- Dumping data for table `pro_bowlers`
---
-
-INSERT INTO `pro_bowlers` (`pid`, `player_id`, `bowler_over`, `bowler_over_maiden`, `bowler_over_runs`, `bowler_over_wicket`, `bowler_over_wide_ball`, `bowler_over_no_ball`, `bowler_over_economy`, `match_id`, `series_id`, `time_stamp`) VALUES
-(1, 28, 6, 1, 36, 1, 1, 2, '6', 1, 53, '2014-11-11 09:35:10'),
-(2, 22, 5, 1, 23, 2, 2, 1, '4.25', 1, 53, '2014-11-11 09:35:10'),
-(3, 28, 6, 1, 36, 1, 1, 2, '6', 1, 53, '2014-11-11 09:35:24'),
-(4, 22, 5, 1, 23, 2, 2, 1, '4.25', 1, 53, '2014-11-11 09:35:24'),
-(5, 29, 6, 0, 54, 1, 4, 2, '9', 1, 53, '2014-11-11 09:35:24'),
-(6, 14, 7, 1, 35, 0, 1, 1, '5', 1, 53, '2014-11-11 09:35:24'),
-(7, 32, 5, 1, 50, 0, 8, 4, '10', 1, 53, '2014-11-11 09:35:25'),
-(8, 11, 5, 2, 12, 0, 0, 0, '2', 1, 53, '2014-11-11 09:35:25');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -90,14 +126,15 @@ CREATE TABLE IF NOT EXISTS `pro_matches` (
   `show_default` enum('1','0') NOT NULL DEFAULT '1',
   `priority` varchar(100) NOT NULL DEFAULT '1',
   PRIMARY KEY (`pid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `pro_matches`
 --
 
 INSERT INTO `pro_matches` (`pid`, `series_id`, `title`, `team1`, `team2`, `url`, `place`, `body`, `metatitle`, `metakey`, `metadesc`, `match_date`, `d`, `m`, `y`, `h`, `minutes`, `status`, `match_num`, `type`, `show_default`, `priority`) VALUES
-(1, 53, '1st Semi-Final ODI - India vs Sri Lanka', 'India', 'Sri Lanka', '', 'Delhi', '<p>\r\n	test</p>\r\n', 'test', 'trst', 'test', '2014-11-12 11:00:00', '12', '11', '2014', '11', '0', 'Active', '1st', 'Semi-Final ODI', '1', '0.64');
+(1, 53, '1st Semi-Final ODI - India vs Sri Lanka', 'India', 'Sri Lanka', '', 'Delhi', '<p>\r\n	test</p>\r\n', 'test', 'trst', 'test', '2014-11-12 11:00:00', '12', '11', '2014', '11', '0', 'Active', '1st', 'Semi-Final ODI', '1', '0.64'),
+(2, 53, '5th ODI - India vs Sri Lanka', 'India', 'Sri Lanka', '', 'Noida', '<p>\r\n	test</p>\r\n', 'test', 'test', 'test', '2014-11-18 14:00:00', '18', '11', '2014', '14', '0', 'Active', '5th', 'ODI', '1', '0.64');
 
 -- --------------------------------------------------------
 
@@ -114,7 +151,6 @@ CREATE TABLE IF NOT EXISTS `pro_match_summary` (
   `total_wicket_team2` int(2) NOT NULL,
   `total_fours` int(5) NOT NULL,
   `total_six` int(5) NOT NULL,
-  `total_over_play` varchar(10) NOT NULL,
   `heighest_run_batsmen` varchar(255) NOT NULL,
   `heighest_wicket_tacker` varchar(255) NOT NULL,
   `run_in_first_over_team1` int(2) NOT NULL,
@@ -126,7 +162,15 @@ CREATE TABLE IF NOT EXISTS `pro_match_summary` (
   `series_id` int(10) DEFAULT NULL,
   `time_stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`pid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `pro_match_summary`
+--
+
+INSERT INTO `pro_match_summary` (`pid`, `toss`, `total_run_team1`, `total_run_team2`, `total_wicket_team1`, `total_wicket_team2`, `total_fours`, `total_six`, `heighest_run_batsmen`, `heighest_wicket_tacker`, `run_in_first_over_team1`, `run_in_first_over_team2`, `men_of_the_match`, `winning_team`, `winning_status`, `match_id`, `series_id`, `time_stamp`) VALUES
+(1, 'India', 300, 200, 5, 10, 45, 20, 'India Suresh Raina -  120', 'Sri Lanka Lasith Malinga -  5', 23, 21, 'Shikhar Dhawan', 'india', ' safsdfsd', 1, 53, '2014-11-12 11:46:42'),
+(2, 'India', 320, 230, 4, 10, 50, 10, 'India Virat Kohli -  150', 'India Ravichandran Ashwin -  6-30', 20, 6, 'Virat Kohli', 'India', ' India win By 90 runs', 1, 53, '2014-11-13 11:18:54');
 
 -- --------------------------------------------------------
 
@@ -187,37 +231,63 @@ CREATE TABLE IF NOT EXISTS `pro_player` (
 --
 
 INSERT INTO `pro_player` (`pid`, `playerName`, `playerImage`, `teamId`, `age`, `playerProfile`, `profileStatus`, `playTeams`, `status`) VALUES
-(5, 'Inshant Sharma', '2883225689.png', 19, 26, '', '', 'India', 'Active'),
-(6, 'MS Dhoni', '1636213019.jpg', 19, 33, '', '', 'INDIA', 'Active'),
-(7, 'Virat Kohli', '698917922.jpg', 19, 25, '', '', 'India', 'Active'),
-(8, 'Ravichandran Ashwin', '234197576.jpg', 19, 27, '', '', 'India', 'Active'),
-(9, 'Stuart Binny', '447212369.jpg', 19, 30, '', '', 'INDIA', 'Active'),
-(10, 'Shikhar Dhawan', '288548631.jpg', 19, 28, '', '', 'INDIA', 'Active'),
-(11, 'Ravindra Jadeja', '1349023555.jpg', 19, 25, '', '', 'INDIA', 'Active'),
-(12, 'Dhawal Kulkarni', '2662310700.jpg', 19, 25, '', '', 'INDIA', 'Active'),
-(13, 'Bhuvneshwar Kumar', '664110710.jpg', 19, 24, '', '', 'INDIA', 'Active'),
-(14, 'Mohammed Shami', '19748141.jpg', 19, 24, '', '', 'INDIA', 'Active'),
-(15, 'Ajinkya Rahane', '183048633.jpg', 19, 26, '', '', 'INDIA', 'Active'),
-(16, 'Suresh Raina', '6931336.jpg', 19, 27, '', '', 'INDIA', 'Active'),
-(17, 'Ambati Rayudu', '251548787.jpg', 19, 28, '', '', 'INDIA', 'Active'),
-(18, 'Sanju Samson', '60326281.jpg', 19, 19, '', '', 'INDIA', 'Active'),
-(21, 'Murali Vijay', '13075816.jpg', 19, 30, '', '', 'INDIA', 'Active'),
-(22, 'Umesh Yadav', '2713413663.jpg', 19, 26, '', '', 'INDIA', 'Active'),
-(24, 'Angelo Mathews', '283797544.jpg', 20, 26, '', '', 'SRI LANKA', 'Active'),
-(25, 'Dinesh Chandimal', '2475024143.jpg', 20, 24, '', '', 'SRI LANKA', 'Active'),
-(26, 'Chaturanga de Silva', '1953723734.jpg', 20, 24, '', '', 'SRI LANKA', 'Active'),
-(27, 'Mahela Jayawardene', '144291490.jpg', 20, 36, '', '', 'SRI LANKA', 'Active'),
-(28, '	 Suranga Lakmal', '76076436.jpg', 20, 26, '', '', 'SRI LANKA', 'Active'),
-(29, 'Lasith Malinga', '2710019173.jpg', 20, 30, '', '', 'SRI LANKA', 'Active'),
-(31, 'Kusal Perera', '236933650.jpg', 20, 23, '', '', 'SRI LANKA', 'Active'),
-(32, 'Thisara Perera', '989119872.jpg', 20, 24, '', '', 'SRI LANKA', 'Active'),
-(33, 'Dhammika Prasad', '27135972.jpg', 20, 36, '', '', 'SRI LANKA', 'Active'),
-(34, 'Ashan Priyanjan', '3022923850.jpg', 20, 24, '', '', 'SRI LANKA', 'Active'),
-(35, 'Kumar Sangakkara', '241479104.jpg', 20, 36, '', '', 'SRI LANKA', 'Active'),
-(36, 'Sachithra Senanayake', '3208911550.jpg', 20, 29, '', '', 'SRI LANKA', 'Active'),
-(37, 'Lahiru Thirimanne', '229704203.jpg', 20, 24, '', '', 'SRI LANKA', 'Active'),
-(38, 'Tillakaratne Dilshan', '100114280.jpg', 20, 37, '', '', 'SRI LANKA', 'Active'),
-(39, 'Nuwan Kulasekara', '242098694.jpg', 2, 31, '', '', 'SHRI LANKA', 'Active');
+(5, 'Inshant Sharma', '2883225689.png', 19, 26, 'Bowler', '', 'India', 'Active'),
+(6, 'MS Dhoni', '1636213019.jpg', 19, 33, 'Caption/Wicket Keeper/Batsman', '', 'INDIA', 'Active'),
+(7, 'Virat Kohli', '698917922.jpg', 19, 25, 'Batsman', '', 'India', 'Active'),
+(8, 'Ravichandran Ashwin', '234197576.jpg', 19, 27, 'Bowler', '', 'India', 'Active'),
+(9, 'Stuart Binny', '447212369.jpg', 19, 30, 'All Rounder', '', 'INDIA', 'Active'),
+(10, 'Shikhar Dhawan', '288548631.jpg', 19, 28, 'Batsman', '', 'INDIA', 'Active'),
+(11, 'Ravindra Jadeja', '1349023555.jpg', 19, 25, 'All Rounder', '', 'INDIA', 'Active'),
+(12, 'Dhawal Kulkarni', '2662310700.jpg', 19, 25, 'Bowler', '', 'INDIA', 'Active'),
+(13, 'Bhuvneshwar Kumar', '664110710.jpg', 19, 24, 'Bowler', '', 'INDIA', 'Active'),
+(14, 'Mohammed Shami', '19748141.jpg', 19, 24, 'Bowler', '', 'INDIA', 'Active'),
+(15, 'Ajinkya Rahane', '183048633.jpg', 19, 26, 'Batsman', '', 'INDIA', 'Active'),
+(16, 'Suresh Raina', '6931336.jpg', 19, 27, 'All Rounder', '', 'INDIA', 'Active'),
+(17, 'Ambati Rayudu', '251548787.jpg', 19, 28, 'Batsman', '', 'INDIA', 'Active'),
+(18, 'Sanju Samson', '60326281.jpg', 19, 19, 'All Rounder', '', 'INDIA', 'Active'),
+(21, 'Murali Vijay', '13075816.jpg', 19, 30, 'Batsman', '', 'INDIA', 'Active'),
+(22, 'Umesh Yadav', '2713413663.jpg', 19, 26, 'Bowler', '', 'INDIA', 'Active'),
+(24, 'Angelo Mathews', '283797544.jpg', 20, 26, 'All Rounder', '', 'SRI LANKA', 'Active'),
+(25, 'Dinesh Chandimal', '2475024143.jpg', 20, 24, 'Batsman', '', 'SRI LANKA', 'Active'),
+(26, 'Chaturanga de Silva', '1953723734.jpg', 20, 24, 'Batsman', '', 'SRI LANKA', 'Active'),
+(27, 'Mahela Jayawardene', '144291490.jpg', 20, 36, 'Batsman', '', 'SRI LANKA', 'Active'),
+(28, 'Suranga Lakmal', '76076436.jpg', 20, 26, 'All Rounder', '', 'SRI LANKA', 'Active'),
+(29, 'Lasith Malinga', '2710019173.jpg', 20, 30, 'Bowler', '', 'SRI LANKA', 'Active'),
+(31, 'Kusal Perera', '236933650.jpg', 20, 23, 'Batsman', '', 'SRI LANKA', 'Active'),
+(32, 'Thisara Perera', '989119872.jpg', 20, 24, 'All Rounder', '', 'SRI LANKA', 'Active'),
+(33, 'Dhammika Prasad', '27135972.jpg', 20, 36, 'Bowler', '', 'SRI LANKA', 'Active'),
+(34, 'Ashan Priyanjan', '3022923850.jpg', 20, 24, 'All Rounder', '', 'SRI LANKA', 'Active'),
+(35, 'Kumar Sangakkara', '241479104.jpg', 20, 36, 'Wicket Keeper/Batsman', '', 'SRI LANKA', 'Active'),
+(36, 'Sachithra Senanayake', '3208911550.jpg', 20, 29, 'All Rounder', '', 'SRI LANKA', 'Active'),
+(37, 'Lahiru Thirimanne', '229704203.jpg', 20, 24, 'Wicket Keeper/Batsman', '', 'SRI LANKA', 'Active'),
+(38, 'Tillakaratne Dilshan', '100114280.jpg', 20, 37, 'All Rounder', '', 'SRI LANKA', 'Active'),
+(39, 'Nuwan Kulasekara', '242098694.jpg', 20, 31, 'Bowler', '', 'SHRI LANKA', 'Active');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pro_prediction`
+--
+
+CREATE TABLE IF NOT EXISTS `pro_prediction` (
+  `pid` int(10) NOT NULL AUTO_INCREMENT,
+  `prediction` varchar(255) NOT NULL,
+  `prediction_points` int(10) NOT NULL,
+  `status` enum('Active','Inactive','','') NOT NULL DEFAULT 'Active',
+  PRIMARY KEY (`pid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+
+--
+-- Dumping data for table `pro_prediction`
+--
+
+INSERT INTO `pro_prediction` (`pid`, `prediction`, `prediction_points`, `status`) VALUES
+(1, 'Team Win', 300, 'Active'),
+(2, 'Team Wins Toss', 50, 'Active'),
+(3, 'Runs in 1st Over', 100, 'Active'),
+(4, 'Man of the Match', 250, 'Active'),
+(5, 'Total Score Team1', 200, 'Active'),
+(6, 'Total Score Team2', 200, 'Active');
 
 -- --------------------------------------------------------
 
@@ -299,7 +369,7 @@ INSERT INTO `pro_series` (`pid`, `title`, `image`, `url`, `place`, `body`, `meta
 (50, 'Sri Lanka tour of New Zealand', '4456751012056074039.png', 'sri-lanka-tour-of-new-zealand-live-streaming', 'New Zealand', '<p>\r\n	Sri Lanka tour of New Zealand 2014-15 Live Cricket Streaming Watch Sri Lanka vs New Zealand Live Streaming. Starting from 26th December 2014 and ends on 29th January 2015, playing 2 tests and 7 ODI cricket matches.</p>\r\n', 'Sri Lanka tour of New Zealand 2014-15 Live Cricket Streaming', 'Sri Lanka tour of New Zealand 2014-15, Live Cricket Streaming, Sri Lanka vs New Zealand Live Streaming', 'Sri Lanka tour of New Zealand 2014-15 Live Cricket Streaming Watch Sri Lanka vs New Zealand Live Streaming', '2014-12-26', '26', '12', '2014', '2015-01-29', '29', '1', '2015', '0.80', 'Active'),
 (51, 'Pakistan tour of New Zealand', '1032304859951124743.jpg', 'pakistan-tour-of-new-zealand-live-streaming', 'New Zealand', '<p>\r\n	Pakistan vs New Zealand Live Cricket Pakistan tour of New Zealand 2015 Watch Pakistan vs New Zealand Live Cricket Streaming Pakistan tour of New Zealand 2015. Series beging on 31st January 2015 and ends on 3rd February 2015</p>\r\n', 'Pakistan vs New Zealand Live Cricket Pakistan tour of New Zealand 2015', 'Pakistan vs New Zealand, Live Cricket, Pakistan tour of New Zealand 2015', 'Pakistan vs New Zealand Live Cricket Pakistan tour of New Zealand 2015 Watch Pakistan vs New Zealand Live Cricket Streaming Pakistan tour of New Zealand 2015', '2015-01-31', '31', '1', '2015', '2015-02-03', '3', '2', '2015', '0.80', 'Active'),
 (52, 'New Zealand tour of England', '958191495679616851.jpg', 'new-zealand-tour-of-england-live-streaming', 'England', '<p>\r\n	England vs New Zealand Live Cricket Streaming Watch New Zealand tour of England 2015 Live Streaming Free Online. New Zealand tour of England 2015 beings on 21st May 2015 and ends on 23rd June, 2015.</p>\r\n', 'England vs New Zealand Cricket New Zealand tour of England 2015', 'England vs New Zealand, live Cricket, New Zealand tour of England 2015', 'England vs New Zealand Live Cricket Streaming Watch New Zealand tour of England 2015 Live Streaming Free Online', '2015-05-21', '21', '5', '2015', '2015-06-23', '23', '6', '2015', '0.80', 'Active'),
-(53, 'Asdw', '3012914998.jpg', 'asdw-live-streaming', 'Delhi', '<p>\r\n	test</p>\r\n', 'ads', 'ads', 'ads', '2014-11-09', '9', '11', '2014', '2014-11-18', '18', '11', '2014', '0.80', 'Active');
+(53, 'India vs Sri Lanka ODI Series', '3012914998.jpg', 'india-vs-sri-lanka-odi-series-live-streaming', 'Delhi', '<p>\r\n	test</p>\r\n', 'ads', 'ads', 'ads', '2014-11-09', '9', '11', '2014', '2014-11-18', '18', '11', '2014', '0.80', 'Active');
 
 -- --------------------------------------------------------
 
@@ -389,6 +459,30 @@ CREATE TABLE IF NOT EXISTS `pro_time_zone` (
   `time_zone` varchar(255) NOT NULL,
   PRIMARY KEY (`pid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pro_user`
+--
+
+CREATE TABLE IF NOT EXISTS `pro_user` (
+  `pid` int(10) NOT NULL AUTO_INCREMENT,
+  `fName` varchar(50) NOT NULL,
+  `userName` varchar(15) NOT NULL,
+  `emailId` varchar(50) NOT NULL,
+  `password` varchar(15) NOT NULL,
+  `activationKey` varchar(255) NOT NULL,
+  `status` enum('Active','Inactive','','') NOT NULL DEFAULT 'Inactive',
+  PRIMARY KEY (`pid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `pro_user`
+--
+
+INSERT INTO `pro_user` (`pid`, `fName`, `userName`, `emailId`, `password`, `activationKey`, `status`) VALUES
+(1, '', 'admin', 'test.web830@gmail.com', 'ZGVtb2RlbW8=', '244764372de454aad4e25a198bedf60d', 'Inactive');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
