@@ -10,10 +10,10 @@
 		define('SITE_SUB_PATH', '/fantasy/trunk/');		
 	} else { 
 		$ARR_CFGS["db_host"] = 'localhost';
-		$ARR_CFGS["db_name"] = 'secondse_fantsy'; 
-    	$ARR_CFGS["db_user"] = 'secondse_fantasy';
-		$ARR_CFGS["db_pass"] = 'demo@1212';
-		define('SITE_SUB_PATH', '/fantasy/');
+		$ARR_CFGS["db_name"] = 'gamesgif_fantasy'; 
+    	$ARR_CFGS["db_user"] = 'gamesgif_fantasy';
+		$ARR_CFGS["db_pass"] = 'demodemo';
+		define('SITE_SUB_PATH', '/');
 	}
 	
 	$tmp = dirname(__FILE__);
