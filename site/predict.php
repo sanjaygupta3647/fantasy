@@ -114,12 +114,7 @@ $arrAdmin=$cms->db_fetch_array($rsAdmin);
 </center>
 </marquee>
 </div>
-              
-              
-              
-              
-              </div>  
-                
+</div>  
 </div>
 
 
