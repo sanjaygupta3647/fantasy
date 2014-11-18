@@ -4,7 +4,7 @@
 	}
 	if (LOCAL_MODE) { 
 		$ARR_CFGS["db_host"] = 'localhost';
-		$ARR_CFGS["db_name"] = 'cricket'; 
+		$ARR_CFGS["db_name"] = 'fantacy'; 
     	$ARR_CFGS["db_user"] = 'root';
 		$ARR_CFGS["db_pass"] = '';
 		define('SITE_SUB_PATH', '/fantasy/trunk/');		
