@@ -1,4 +1,5 @@
-<?php 
+<?php
+//echo SITE_PATH; die("lklkwdnflkn"); 
 if($_POST[login]){
 	$rsCheck = $cms->db_query("select * from #_user where userName='".trim($_POST[userName])."' and password='". base64_encode(trim($_POST[password]))."' and status='Active'");
 	if(mysql_num_rows($rsCheck)){
@@ -90,7 +91,7 @@ if($_POST[register]){
                   <div class="tab-pane <?=($_POST[register])?'':'active'?>" id="home2">
 				  <form role="form" method="post"> 
 				  <input type="hidden" name="login" value="1" />
-                    <p><a href="#"><img src="images/facebook.jpg"></a> <a href="#"><img src="images/twitter.jpg"></a></p>
+                    <p><a href="<?=SITE_PATH?>fbconfig"><img src="images/facebook.jpg"></a> <a href="#"><img src="images/twitter.jpg"></a></p>
                     <div class="form-group">
                       <div class="input-group login-input"> <span class="input-group-addon"><i class="fa fa-user"></i></span>
                         <input class="form-control" placeholder="User Name" value="<?=$_POST[userName]?>" name="userName" type="text">
