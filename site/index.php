@@ -1,5 +1,5 @@
 <?php 
-if($cms->is_post_back()){
+if($_POST[login]){
 	$rsCheck = $cms->db_query("select * from #_user where userName='".trim($_POST[userName])."' and password='". base64_encode(trim($_POST[password]))."' and status='Active'");
 	if(mysql_num_rows($rsCheck)){
 		$arrCheck = $cms->db_fetch_array($rsCheck);
@@ -13,6 +13,45 @@ if($cms->is_post_back()){
 	else {
 		$postmsg = '<p style="color:#FF0000">Invalid User Name Or Password!.</p>';
 	}
+}
+if($_POST[register]){ 
+	$err = 0;
+	$checkemail = $cms->getSingleresult("SELECT count(*) FROM #_user WHERE  emailId='".$_POST[emailId]."' "); 
+	$user = $cms->getSingleresult("SELECT count(*) FROM #_user WHERE userName ='".$_POST[userName]."' ");
+	if($checkemail){ $err = 1; $postmsg= '<p style="color:#FF0000">Email already exist.</p>';  }
+	if($user){ $err = 1; $postmsg= '<p style="color:#FF0000">Username already exist.</p>';  }   
+	if(!$err){  
+		$_POST[password] = base64_encode($_POST[password]); 
+		$activation	= md5(time().$userName.mt_rand(1000,9999));
+		$_POST[activationKey] = $activation;  
+		$cms->sqlquery("rs","user",$_POST); 
+		$postmsg= '<p style="color:#33FF33">Thank you for successful registration. Please check your Email.</p>';
+		$activation_key = $cms->getSingleresult("SELECT activationKey FROM #_user WHERE emailId='".$emailId."' AND status='Inactive' ");
+		$activate_link = SITE_PATH."activate?key=".$activation_key;
+		$to = $emailId ; 
+		$subject = "Registration Confirmation Email";
+		$mail_body = '<html>
+		<body>
+		<table width="100%" align="center" style="background-color:#eee">
+		<tr><td colspan="2" align="left">Thank you for having account with us on ' .SITE_PATH. ' your login detail are bellow:</td></tr>
+		<tr><td width="7%"  align="left">User Name:</td><td align="left">'  .$userName. '</td></tr>
+		<tr><td width="5%"  align="left">Name:</td><td align="left">' .$name. '</td></tr>
+		<tr><td width="5%"  align="left">Email Id:</td><td align="left">' .$emailId. '</td></tr>
+		<tr><td width="5%"  align="left">Password:</td><td align="left">' .$password. '</td></tr> 
+		<tr><td colspan="2"  align="left">Please click the following link to activate your account:</td><td align="left">' .$activate_link. '</td></tr> 
+		<tr><td colspan="2" align="left">Thanks and Regards,<br>Admin @'.SITE_NAME.'</td></tr>
+		</table> 
+		</body>
+		</html>';
+		$adminEmail = SITE_MAIL;
+		$from = $adminEmail;
+		$headers = 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+		$headers .= 'From: '.$adminEmail.'' . "\r\n";  
+		@mail($to, $subject, $mail_body, $headers,"-f $from"); 
+		$er = '<p align="left" style="color:green; margin:10px 0; display:block; " >Your login detail has been sent to the registered email id!</p>';
+		$_POST = false;  
+	}   
+	 
 }
 ?>
 
@@ -42,41 +81,49 @@ if($cms->is_post_back()){
             <div class="col-md-6 col-sm-5 hidden-xs carousel-img-wrap">
               <div class="main_tab">
                 <ul class="nav nav-tabs nav-tabs-ar nav-tabs-ar-white">
-                  <li class="active"><a href="#home2" data-toggle="tab">Sign In</a></li>
-                  <li><a href="#profile2" data-toggle="tab">Register</a></li>
+                  <li <?=($_POST[register])?'':'class="active"'?> ><a href="#home2" data-toggle="tab">Sign In</a></li>
+                  <li <?=($_POST[register])?'class="active"':''?>><a href="#profile2" data-toggle="tab">Register</a></li>
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content">
-                  <div class="tab-pane active" id="home2">
+				 
+                  <div class="tab-pane <?=($_POST[register])?'':'active'?>" id="home2">
+				  <form role="form" method="post"> 
+				  <input type="hidden" name="login" value="1" />
                     <p><a href="#"><img src="images/facebook.jpg"></a> <a href="#"><img src="images/twitter.jpg"></a></p>
                     <div class="form-group">
                       <div class="input-group login-input"> <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                        <input class="form-control" placeholder="Login" type="text">
+                        <input class="form-control" placeholder="User Name" value="<?=$_POST[userName]?>" name="userName" type="text">
                       </div>
                       <br>
                       <div class="input-group login-input"> <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                        <input class="form-control" placeholder="Password" type="password">
+                        <input class="form-control" placeholder="Password" name="password" type="password">
                       </div>
+					  <?=$postmsg?>
                       <hr class="dotted margin-10">
                       <button type="submit" class="btn btn-ar btn-primary pull-right">Sign in</button>
                       <a href="#" class="social-icon-ar sm twitter animated fadeInDown animation-delay-2">Forgotten password</a>
                       <hr class="dotted margin-10">
                     </div>
+					</form>
                   </div>
-                  <div class="tab-pane" id="profile2">
-                    <form role="form">
-                      <div class="form-group">
+				  
+                  <div class="tab-pane <?=($_POST[register])?'active':''?>" id="profile2"> 
+				    <form role="form" method="post"> 
+                      <div class="form-group">   
+					   <input type="hidden" name="register" value="1" />
                         <label for="InputUserName">User Name<sup>*</sup></label>
-                        <input class="form-control" id="InputUserName" type="text">
+                        <input class="form-control" id="InputUserName" type="text" value="<?=$_POST[userName]?>" name="userName">
                       </div>
                       <div class="form-group">
                         <label for="InputEmail">Email<sup>*</sup></label>
-                        <input class="form-control" id="InputEmail" type="email">
+                        <input class="form-control" id="InputEmail" type="email" value="<?=$_POST[emailId]?>" name="emailId">
                       </div>
                       <div class="form-group">
                         <label for="InputEmail">Password<sup>*</sup></label>
-                        <input class="form-control" id="InputPassword" type="password">
+                        <input class="form-control" id="InputPassword" type="password" name="password">
                       </div>
+					  <div><?=$postmsg?></div>
                       <div class="row">
                         <div class="col-md-8">
                           <label class="checkbox-inline">
@@ -85,9 +132,9 @@ if($cms->is_post_back()){
                         </div>
                         <div class="col-md-4">
                           <button type="submit" class="btn btn-ar btn-primary pull-right">Register</button>
-                        </div>
-                      </div>
-                    </form>
+                        </div> 
+                      </div> 
+					  </form> 
                   </div>
                 </div>
               </div>
