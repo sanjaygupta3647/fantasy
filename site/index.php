@@ -167,15 +167,13 @@ if($_POST[register]){
       <div class="col-md-3 col-sm-6">
         <div class="content-box box-default animated fadeInUp animation-delay-12" style="background-image: none;width:auto;">
           <?php
-				$getPoints = $cms->db_query("SELECT * FROM #_prediction WHERE status = 'Active' ORDER BY prediction_points DESC LIMIT 5");
+				$getPoints = $cms->db_query("SELECT * FROM #_prediction WHERE status = 'Active' ORDER BY prediction_points DESC LIMIT 6");
+				$i = 1;
 				while($arrPoint = $cms->db_fetch_array($getPoints)){
 			?>
-          <p class="em-primary-inverse">
-            <?=$arrPoint[prediction]?>
-            =
-            <?=$arrPoint[prediction_points]?>
-            Points</p>
-          <?php } ?>
+          <p <?=($i%2==0)?'class="em-info-inverse"':'class="em-primary-inverse"'?>>
+            <?=$arrPoint[prediction]?> =  <?=$arrPoint[prediction_points]?>  Points</p>
+          <?php $i++; } ?>
           <!--
 			<p class="em-primary-inverse">Players score = 600 points</p>
 			<p class="em-info-inverse">Total score = 400 points</p>
