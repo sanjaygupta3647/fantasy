@@ -6,16 +6,17 @@ if($_SESSION['FBID']){
 else 
 if(!$_SESSION['userName']) $cms->redir(SITE_PATH, true);
 $arrCheck = $cms->db_query("SELECT * FROM #_user WHERE pid = '".$_SESSION['pid']."' AND userName = '".$_SESSION['userName']."'");
-$arrDetail = $cms->db_fetch_array($arrCheck);
+$udetl = $cms->db_fetch_array($arrCheck);
 //print_r($arrDetail);
 ?>
 <div class="container">
 <div class="row" style="margin-top: 40px;">
 
 <div class="col-md-3" style="border: 1px solid rgb(236, 236, 236);">
-<span style="padding-left: 15px;"><strong><?php if($_SESSION['FBID']){ echo $_SESSION['FULLNAME'];}else { echo strtoupper($_SESSION['userName']); } ?></strong></span>
+<span style="padding-left: 15px;">Welcome, <?php if($_SESSION['FBID']){ echo $_SESSION['FULLNAME'];}else { echo strtoupper($_SESSION['userName']); } ?></span>
 <div class="points">
-<span class="points_img"><img src="images/pointss.jpg"></span>
+<?php if($udetl[image]){}else{ $path = SITE_PATH."images/no-user-image.png";}?>
+<span class="points_img"><img src="<?=$path?>" width="75" style="max-height:74px;"></span>
 
 <span class="points_img2">
 <div class="two_points">200 pionts</div>
