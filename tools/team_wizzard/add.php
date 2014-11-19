@@ -7,7 +7,7 @@ if($cms->is_post_back()){
 		$adm->sessset('Record has been updated', 's');
 	} else { 
 		$arrNew = array();
-		$arrNew[toss] 						= $_POST[team_name];
+		$arrNew[toss] 						= $_POST[toss];
 		$arrNew[men_of_the_match] 			= $_POST[men_of_the_match];
 		$arrNew[total_run_team1] 			= $_POST[total_score_team1];
 		$arrNew[total_run_team2] 			= $_POST[total_score_team2];
@@ -17,8 +17,7 @@ if($cms->is_post_back()){
 		$arrNew[run_in_first_over_team2] 	= $_POST[run_in_first_over2];
 		$arrNew[total_fours] 				= $_POST[total_fours];
 		$arrNew[total_six] 					= $_POST[total_six];
-		$arrNew[heighest_run_batsmen] 		= $_POST[team_name_batsmen]." ".$_POST[player_name_batsmen]." - ".$_POST[heighest_run_batsmen];
-		$arrNew[heighest_wicket_tacker] 	= $_POST[team_name_bowler]." ".$_POST[player_name_bowler]." - ".$_POST[heighest_wicket_tacker];
+		 
 		$arrNew[winning_team] 				= $_POST[winning_team];
 		$arrNew[winning_status] 			= $_POST[winning_status];
 		$arrNew[match_id] 					= $match_id;
@@ -101,8 +100,8 @@ if($cms->is_post_back()){
 	$path = SITE_PATH_ADM.CPAGE."?mode=add&id=".$updateid;
 	$cms->redir($path, true);
 }	
-if(isset($id)){
-	$rsAdmin=$cms->db_query("select * from #_match_summary where pid='".$id."'");
+if(isset($match_id)){
+	$rsAdmin=$cms->db_query("select * from #_match_summary where match_id='".$match_id."'");
 	$arrAdmin=$cms->db_fetch_array($rsAdmin);
 	@extract($arrAdmin);
 }
@@ -114,14 +113,14 @@ if(isset($id)){
 	<tr>
 		<td width="20%"  class="label">Toss:</td>
 		<td width="25%">
-			<select name="team_name" class="txt medium" >
+			<select name="toss" class="txt medium" >
 				<option value="">
 					Select
 				</option>
-				<option value="<?=$arrMatches[team1]?>">
+				<option <?=($arrMatches[team1]==$toss)?'selected="selected"':''?> value="<?=$arrMatches[team1]?>">
 					<?=$arrMatches[team1]?>
 				</option>
-				<option value="<?=$arrMatches[team2]?>">
+				<option <?=($arrMatches[team2]==$toss)?'selected="selected"':''?> value="<?=$arrMatches[team2]?>">
 					<?=$arrMatches[team2]?>
 				</option>
 				 
@@ -137,7 +136,7 @@ if(isset($id)){
 				$rsPlayer=$cms->db_query("SELECT * FROM #_player WHERE playTeams IN ('".$arrMatches[team1]."' , '".$arrMatches[team2]."') ORDER BY playerName ASC");
 				while($arrPlayer=$cms->db_fetch_array($rsPlayer)){
 			?>	 
-				<option value="<?=$arrPlayer[playerName]?>">
+				<option <?=($arrPlayer[playerName]==$men_of_the_match)?'selected="selected"':''?> value="<?=$arrPlayer[playerName]?>">
 					<?=$arrPlayer[playerName]?>
 				</option>
 			<?php }	?>	 
@@ -146,104 +145,51 @@ if(isset($id)){
     </tr>
 	<tr>
 		<td width="25%"  class="label">Score: Team - <?=$arrMatches[team1]?></td>
-		<td width="25%"><input type="text" name="total_score_team1"  title="over" class="txt medium" value=" " />	</td>
+		<td width="25%"><input type="text" name="total_score_team1"  title="over" class="txt medium" value="<?=$total_run_team1?>" />	</td>
 		<td width="25%"  class="label">Wickets: Team - <?=$arrMatches[team1]?></td>
-		<td width="25%"><input type="text" name="total_wicket_team1"  title="over" class="txt medium" value=" " />	</td>
+		<td width="25%"><input type="text" name="total_wicket_team1"  title="over" class="txt medium" value="<?=$total_wicket_team1?>" />	</td>
 	 
     </tr>
 	<tr>
 		<td width="25%"  class="label">Score: Team - <?=$arrMatches[team2]?></td>
-		<td width="25%"><input type="text" name="total_score_team2"  title="over" class="txt medium" value=" " />	</td>
+		<td width="25%"><input type="text" name="total_score_team2"  title="over" class="txt medium" value="<?=$total_run_team2?>" />	</td>
 		<td width="25%"  class="label">Wickets: Team - <?=$arrMatches[team2]?></td>
-		<td width="25%"><input type="text" name="total_wicket_team2"  title="over" class="txt medium" value=" " />	</td>
+		<td width="25%"><input type="text" name="total_wicket_team2"  title="over" class="txt medium" value="<?=$total_wicket_team2?>" />	</td>
 	 
     </tr>
 	<tr>
 		<td width="25%"  class="label">Run First over: Team - <?=$arrMatches[team1]?></td>
-		<td width="25%"><input type="text" name="run_in_first_over1"  title="over" class="txt medium" value=" " />	</td>
+		<td width="25%"><input type="text" name="run_in_first_over1"  title="over" class="txt medium" value="<?=$run_in_first_over_team1?>" />	</td>
 		<td width="25%"  class="label">Run First over: Team - <?=$arrMatches[team2]?></td>
-		<td width="25%"><input type="text" name="run_in_first_over2"  title="over" class="txt medium" value=" " />	</td>
+		<td width="25%"><input type="text" name="run_in_first_over2"  title="over" class="txt medium" value="<?=$run_in_first_over_team2?>" />	</td>
 	</tr>
 	<tr>
 		<td width="25%"  class="label">Total Fours in the Match :</td>
-		<td width="25%"><input type="text" name="total_fours"  title="over" class="txt medium" value=" " />	</td>
+		<td width="25%"><input type="text" name="total_fours"  title="over" class="txt medium" value="<?=$total_fours?>" />	</td>
 		<td width="25%"  class="label">Total Sixes in the Match:</td>
-		<td width="25%"><input type="text" name="total_six"  title="over" class="txt medium" value=" " />	</td>
+		<td width="25%"><input type="text" name="total_six"  title="over" class="txt medium" value="<?=$total_six?>" />	</td>
 	</tr>
 	<tr>
 		<td width="25%"  class="label">Winner team:</td>
-		<td width="25%"><input type="text" name="winning_team"  title="over" class="txt medium" value="" />	</td>
-		<td width="25%"  class="label">How Winning Match:</td>
-		<td width="25%"><input type="text" name="winning_status"  title="over" class="txt medium" value=" " />	</td>
-    </tr>
-	<tr>
-		<td width="25%"  class="label">Highest Run Batsman :</td>
 		<td width="25%">
-			<select name="team_name_batsmen" class="txt medium" >
+		<select name="winning_team" class="txt medium" >
 				<option value="">
 					Select
 				</option>
-				<option value="<?=$arrMatches[team1]?>">
+				<option <?=($arrMatches[team1]==$winning_team)?'selected="selected"':''?> value="<?=$arrMatches[team1]?>">
 					<?=$arrMatches[team1]?>
 				</option>
-				<option value="<?=$arrMatches[team2]?>">
+				<option <?=($arrMatches[team2]==$winning_team)?'selected="selected"':''?> value="<?=$arrMatches[team2]?>">
 					<?=$arrMatches[team2]?>
 				</option>
 				 
 			</select>
-		</td>
-		<td width="25%"  class="label">
-			<select name="player_name_batsmen" class="txt medium"   >
-			<option value="">
-					Select
-				</option>
-			<?php
-				$rsPlayer=$cms->db_query("SELECT * FROM #_player WHERE playTeams IN ('".$arrMatches[team1]."' , '".$arrMatches[team2]."') ORDER BY playerName ASC");;
-				while($arrPlayer=$cms->db_fetch_array($rsPlayer)){
-			?>	 
-				<option value="<?=$arrPlayer[playerName]?>">
-					<?=$arrPlayer[playerName]?>
-				</option>
-			<?php }	?>	 
-			</select>
-		</td>
-		<td width="25%"><input type="text" name="heighest_run_batsmen"  title="over" class="txt medium" value=" " /></td>
-		 
-	</tr>
-	<tr>
-		<td width="25%"  class="label">Highest Wicket Bowler :</td>
-		<td width="25%">
-			<select name="team_name_bowler" class="txt medium" >
-				<option value="">
-					Select
-				</option>
-				<option value="<?=$arrMatches[team1]?>">
-					<?=$arrMatches[team1]?>
-				</option>
-				<option value="<?=$arrMatches[team2]?>">
-					<?=$arrMatches[team2]?>
-				</option>
-				 
-			</select>
-		</td>
-		<td width="25%"  class="label">
-			<select name="player_name_bowler" class="txt medium">
-			<option value="">
-					Select
-				</option>
-			<?php
-				$rsPlayer=$cms->db_query("SELECT * FROM #_player WHERE playTeams IN ('".$arrMatches[team1]."' , '".$arrMatches[team2]."') ORDER BY playerName ASC");;
-				while($arrPlayer=$cms->db_fetch_array($rsPlayer)){
-			?>	 
-				<option value="<?=$arrPlayer[playerName]?>">
-					<?=$arrPlayer[playerName]?>
-				</option>
-			<?php }	?>	 
-			</select>
-		</td>
-		<td width="25%"><input type="text" name="heighest_wicket_tacker"  title="over" class="txt medium" value=" " />	</td>
 		
-	</tr>
+		 </td>
+		<td width="25%"  class="label">How Winning Match:</td>
+		<td width="25%"><input type="text" name="winning_status"  title="over" class="txt medium" value="<?=$winning_status?>" />	</td>
+    </tr>
+	 
 </table>
 	<table width="100%" border="0" align="left" cellpadding="4" cellspacing="1" class="frm-tbl2">
 	  	<tr style="font-size: 18px;color: gray;">
