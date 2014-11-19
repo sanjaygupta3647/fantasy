@@ -1,4 +1,5 @@
 <?php
+if(!$_SESSION['userName']) $cms->redir(SITE_PATH, true);
 $arrCheck = $cms->db_query("SELECT * FROM #_user WHERE pid = '".$_SESSION['pid']."' AND userName = '".$_SESSION['userName']."'");
 $arrDetail = $cms->db_fetch_array($arrCheck);
 //print_r($arrDetail);

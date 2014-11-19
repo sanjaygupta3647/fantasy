@@ -15,15 +15,15 @@ if($cms->is_post_back()){
 	}
 }
 ?>
-
 <section class="carousel-section">
-  <div id="carousel-example-generic" class="carousel carousel-razon slide" data-ride="carousel" data-interval="5000">
+  <div id="carousel-example-generic" class="carousel carousel-razon slide" data-ride="carousel" data-interval="5000"> 
     <!-- Indicators -->
     <ol class="carousel-indicators">
       <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
       <li data-target="#carousel-example-generic" data-slide-to="1"></li>
       <li data-target="#carousel-example-generic" data-slide-to="2"></li>
     </ol>
+    
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
       <div class="item active">
@@ -43,52 +43,60 @@ if($cms->is_post_back()){
               <div class="main_tab">
                 <ul class="nav nav-tabs nav-tabs-ar nav-tabs-ar-white">
                   <li class="active"><a href="#home2" data-toggle="tab">Sign In</a></li>
-                  <li><a href="#profile2" data-toggle="tab">Register</a></li>
+					<li><a href="#profile2" data-toggle="tab">Register</a></li>
                 </ul>
+                
                 <!-- Tab panes -->
-                <div class="tab-content">
+                <div class="tab-content" id="profile2">
+				<form action="" method="post">
                   <div class="tab-pane active" id="home2">
-                    <p><a href="#"><img src="images/facebook.jpg"></a> <a href="#"><img src="images/twitter.jpg"></a></p>
+                    <p><a href="<?=SITE_PATH?>fbconfig"><img src="<?=SITE_PATH?>images/facebook.jpg"></a> <a href="#"><img src="<?=SITE_PATH?>images/twitter.jpg"></a></p>
                     <div class="form-group">
                       <div class="input-group login-input"> <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                        <input class="form-control" placeholder="Login" type="text">
+                        <input class="form-control" placeholder="User Name" type="text" name="userName">
                       </div>
                       <br>
                       <div class="input-group login-input"> <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                        <input class="form-control" placeholder="Password" type="password">
+                        <input class="form-control" placeholder="Password" type="password" name="password">
                       </div>
+					  <?=$postmsg?>
                       <hr class="dotted margin-10">
                       <button type="submit" class="btn btn-ar btn-primary pull-right">Sign in</button>
                       <a href="#" class="social-icon-ar sm twitter animated fadeInDown animation-delay-2">Forgotten password</a>
                       <hr class="dotted margin-10">
                     </div>
                   </div>
+				  </form>
                   <div class="tab-pane" id="profile2">
-                    <form role="form">
+                    <form role="form"  action="" method="post">
                       <div class="form-group">
                         <label for="InputUserName">User Name<sup>*</sup></label>
-                        <input class="form-control" id="InputUserName" type="text">
+                        <input class="form-control" id="InputUserName" type="text" name="userName">
                       </div>
                       <div class="form-group">
                         <label for="InputEmail">Email<sup>*</sup></label>
-                        <input class="form-control" id="InputEmail" type="email">
+                        <input class="form-control" id="InputEmail" type="email" name="emailId">
                       </div>
                       <div class="form-group">
                         <label for="InputEmail">Password<sup>*</sup></label>
-                        <input class="form-control" id="InputPassword" type="password">
+                        <input class="form-control" id="InputPassword" type="password" name="password">
                       </div>
+						<div>
+							<?=$postmsg?>
+						</div>
                       <div class="row">
                         <div class="col-md-8">
                           <label class="checkbox-inline">
-                          <input id="inlineCheckbox1" value="option1" type="checkbox">
-                          I read <a href="#">Terms and Conditions</a>. </label>
+                            <input id="inlineCheckbox1" value="option1" type="checkbox" required >
+                            I read <a href="#" required>Terms and Conditions</a>. </label>
                         </div>
+						
                         <div class="col-md-4">
-                          <button type="submit" class="btn btn-ar btn-primary pull-right">Register</button>
+                          <button type="submit" id="register" class="btn btn-ar btn-primary pull-right">Register</button>
                         </div>
                       </div>
                     </form>
-                  </div>
+                  </div> 
                 </div>
               </div>
             </div>
@@ -106,7 +114,7 @@ if($cms->is_post_back()){
           <p class="em-danger-inverse">Predict</p>
         </div>
       </div>
-      <div class="col-md-3 col-sm-6">
+	  <div class="col-md-3 col-sm-6">
         <div class="content-box box-default animated fadeInUp animation-delay-16"> <span class="icon-ar icon-ar-lg icon-ar-round icon-ar-inverse"><img src="<?=SITE_PATH?>images/box_icon3.png"></span>
           <p class="em-danger-inverse">Win Points</p>
         </div>
@@ -116,24 +124,21 @@ if($cms->is_post_back()){
           <p class="em-danger-inverse">Redeem Free Gifts</p>
         </div>
       </div>
+      
       <div class="col-md-3 col-sm-6">
         <div class="content-box box-default animated fadeInUp animation-delay-12" style="background-image: none;width:auto;">
-          <?php
+			<?php
 				$getPoints = $cms->db_query("SELECT * FROM #_prediction WHERE status = 'Active' ORDER BY prediction_points DESC LIMIT 5");
 				while($arrPoint = $cms->db_fetch_array($getPoints)){
 			?>
-          <p class="em-primary-inverse">
-            <?=$arrPoint[prediction]?>
-            =
-            <?=$arrPoint[prediction_points]?>
-            Points</p>
-          <?php } ?>
-          <!--
+			<p class="em-primary-inverse"><?=$arrPoint[prediction]?> = <?=$arrPoint[prediction_points]?> Points</p>
+			<?php } ?>
+			<!--
 			<p class="em-primary-inverse">Players score = 600 points</p>
 			<p class="em-info-inverse">Total score = 400 points</p>
 			<p class="em-primary-inverse">Players score = 600 points</p>
 			<p class="em-info-inverse">Total score = 400 points</p>-->
-        </div>
+		</div>
       </div>
     </div>
   </div>
@@ -147,23 +152,15 @@ if($cms->is_post_back()){
         <div style="max-width: 1130px; margin: 0px auto;" class="bx-wrapper">
           <div style="width: 100%; overflow: hidden; position: relative; height: 100px; padding-left: 15px; border-bottom: 1px solid #CCC;" class="bx-viewport">
             <ul style="width: 1415%; position: relative; transition-duration: 0s; transform: translate3d(-1180px, 0px, 0px);" class="center" id="latest-works">
-              <?php
+				<?php
 					$getGifts = $cms->db_query("SELECT * FROM #_gift WHERE status = 'Active'");
 					while($arrGift = $cms->db_fetch_array($getGifts)){
 				?>
-              <li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
-                <div class="img-caption-ar">
-                  <label for="gift" style="margin-left: 12px;">
-                  <?=$arrGift[giftName]?>
-                  </label>
-                  </br>
-                  <label for="points">
-                  <?=$arrGift[get_points]?>
-                  Points</label>
-                </div>
-              </li>
-              <?php } ?>
-              <!-- <li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
+				  <li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
+					<div class="img-caption-ar"> <label for="gift" style="margin-left: 12px;"><?=$arrGift[giftName]?> </label></br><label for="points"><?=$arrGift[get_points]?> Points</label> </div>
+				  </li>
+				<?php } ?>
+             <!-- <li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
                 <div class="img-caption-ar"> <img src="<?=SITE_PATH?>images/one_slids.jpg" class="img-responsive" alt="Image"> </div>
               </li>
               <li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
@@ -350,7 +347,7 @@ if($cms->is_post_back()){
         </div>
       </div>
       <div class="col-lg-3">
-        <?php
+		<?php
 		
 		?>
         <p class="top_new2"> <img src="<?=SITE_PATH?>images/lock.png" align="left"><span style="padding-left: 7px;">PAKISTAN V AUSTRALIA<br>
