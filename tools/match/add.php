@@ -2,9 +2,9 @@
 <?php 
   
 if($cms->is_post_back()){
-	$cms->createXmlFile();
-	$_POST[title] = $_POST[match_num]." ".$_POST[type]." - ".$_POST[team1]." vs ".$_POST[team2];
-	//$_POST[url] = $adm->baseurl($_POST[title])."-live-streaming";
+	//$cms->createXmlFile();
+	$_POST[title] = $_POST[match_num]." ".$_POST[type]." - ".$cms->getSingleresult("select name from #_team where pid='".$_POST[team1]."'")." vs ".$cms->getSingleresult("select name from #_team where pid='".$_POST[team2]."'");
+	
 	if($d<10) {$d = "0".$d;   }
 	if($m<10) {$m = "0".$m;  }
 	if($m<10) {$h = "0".$h;  }
@@ -19,6 +19,9 @@ if($cms->is_post_back()){
 		$updateid = mysql_insert_id();
 		$adm->sessset('Record has been added', 's'); 
 	}
+	$up[url] = $adm->baseurl($_POST[title])."-live-streaming-$updateid";
+	$cms->sqlquery("rs","matches",$up,'pid',$updateid);
+
 	$path = SITE_PATH_ADM.CPAGE."?mode=add&id=".$updateid;
 	$cms->redir($path, true);
 }	
@@ -133,22 +136,22 @@ if(isset($id)){
 	  ?>
 	  </select>
 	  Match Type:<select name="type" class="txt medium"> 
-	  <option value="ODI" <?php if($type='ODI')echo'selected="selected"';?>>ODI</option>
-	  <option value="Test" <?php if($type='Test')echo'selected="selected"';?>>Test</option>
-	  <option value="T20" <?php if($type='T20')echo'selected="selected"';?>>T20</option>
-	  <option value="Semi Final T20" <?php if($type='Semi Final T20')echo'selected="selected"';?>>Semi Final T20</option>
-	  <option value="Qualifier T20" <?php if($type='Qualifier T20')echo'selected="selected"';?>>Qualifier T20</option>
-	  <option value="Eliminator T20" <?php if($type='Eliminator T20')echo'selected="selected"';?>>Eliminator T20</option>
-	  <option value="Final T20" <?php if($type='Final T20')echo'selected="selected"';?>>Final T20</option>
-	  <option value="Final ODI" <?php if($type='Final ODI')echo'selected="selected"';?>>Final ODI</option>
-	  <option value="Quarter-Final ODI" <?php if($type='Quarter-Final ODI')echo'selected="selected"';?>>Quarter-Final ODI</option>
-	  <option value="Semi-Final ODI" <?php if($type='Semi-Final ODI')echo'selected="selected"';?>>Semi-Final ODI</option>
+	  <option value="ODI" <?php if($type=='ODI')echo'selected="selected"';?>>ODI</option>
+	  <option value="Test" <?php if($type=='Test')echo'selected="selected"';?>>Test</option>
+	  <option value="T20" <?php if($type=='T20')echo'selected="selected"';?>>T20</option>
+	  <option value="Semi Final T20" <?php if($type=='Semi Final T20')echo'selected="selected"';?>>Semi Final T20</option>
+	  <option value="Qualifier T20" <?php if($type=='Qualifier T20')echo'selected="selected"';?>>Qualifier T20</option>
+	  <option value="Eliminator T20" <?php if($type=='Eliminator T20')echo'selected="selected"';?>>Eliminator T20</option>
+	  <option value="Final T20" <?php if($type=='Final T20')echo'selected="selected"';?>>Final T20</option>
+	  <option value="Final ODI" <?php if($type=='Final ODI')echo'selected="selected"';?>>Final ODI</option>
+	  <option value="Quarter-Final ODI" <?php if($type=='Quarter-Final ODI')echo'selected="selected"';?>>Quarter-Final ODI</option>
+	  <option value="Semi-Final ODI" <?php if($type=='Semi-Final ODI')echo'selected="selected"';?>>Semi-Final ODI</option>
 	  </select>
 	  Team1:<select name="team1" class="txt medium"> 
 	  <?php
 	  $rsAdmin2=$cms->db_query("select * from #_team where status='Active' order by name");
 	  while($arrAdmin2=$cms->db_fetch_array($rsAdmin2)){@extract($arrAdmin2);
-	  ?><option value="<?=$name?>" <?php if($name==$team1)echo'selected="selected"';?>><?=$name?></option><?php
+	  ?><option value="<?=$pid?>" <?php if($pid==$team1)echo'selected="selected"';?>><?=$name?></option><?php
 	  }
 	  ?>
 	  </select>
@@ -157,7 +160,7 @@ if(isset($id)){
 	  <?php
 	  $rsAdmin2=$cms->db_query("select * from #_team where status='Active' order by name");
 	  while($arrAdmin2=$cms->db_fetch_array($rsAdmin2)){@extract($arrAdmin2);
-	  ?><option value="<?=$name?>" <?php if($name==$team2)echo'selected="selected"';?>><?=$name?></option><?php
+	  ?><option value="<?=$pid?>" <?php if($pid==$team2)echo'selected="selected"';?>><?=$name?></option><?php
 	  }
 	  ?>
 	  </select>

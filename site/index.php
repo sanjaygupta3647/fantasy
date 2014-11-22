@@ -1,5 +1,7 @@
-<?php
-//echo SITE_PATH; die("lklkwdnflkn"); 
+<?php 
+$metaTitle = $cms->getSingleresult("select meta_title from #_pages where heading = 'Home' and status = 'Active'");
+$metaIntro = $cms->getSingleresult("select meta_description from #_pages where heading = 'Home' and status = 'Active'");
+$metaKeyword = $cms->getSingleresult("select meta_keyword from #_pages where heading = 'Home' and status = 'Active'"); 
 if($_POST[login]){
 	$rsCheck = $cms->db_query("select * from #_user where userName='".trim($_POST[userName])."' and password='". base64_encode(trim($_POST[password]))."' and status='Active'");
 	if(mysql_num_rows($rsCheck)){
@@ -72,9 +74,9 @@ if($_POST[register]){
             <div class="col-md-6 col-sm-7">
               <div class="carousel-caption">
                 <div class="carousel-text">
-                  <h1 class="animated fadeInDownBig animation-delay-7 carousel-title">Welcome to the Fanstastic Cup</h1>
+                  <h1 class="animated fadeInDownBig animation-delay-7 carousel-title"><?=$cms->getSingleresult("select title from #_pages where heading = 'Home' and status = 'Active'")?></h1>
                   <ul class="list-unstyled carousel-list">
-                    <li class="animated bounceInLeft animation-delay-11">Lorem ipsum dolor sit amet consectetur adipisicing elit. In rerum maxime quis tenetur dolor  qui enim dolorem.  In rerum maxime quis tenetur dolor  qui enim dolorem.  In rerum maxime quis tenetur dolor  qui enim dolorem. In rerum maxime quis tenetur dolor  qui enim dolorem.</li>
+                    <li class="animated bounceInLeft animation-delay-11"><?=strip_tags($cms->getSingleresult("select body from #_pages where heading = 'Home' and status = 'Active'"))?></li>
                   </ul>
                 </div>
               </div>
@@ -82,6 +84,9 @@ if($_POST[register]){
             <div class="col-md-6 col-sm-5 hidden-xs carousel-img-wrap">
               <div class="main_tab">
                 <ul class="nav nav-tabs nav-tabs-ar nav-tabs-ar-white">
+				   <?php
+					if($register) $_POST[register]  = 1;
+				   ?>
                   <li <?=($_POST[register])?'':'class="active"'?> ><a href="#home2" data-toggle="tab">Sign In</a></li>
                   <li <?=($_POST[register])?'class="active"':''?>><a href="#profile2" data-toggle="tab">Register</a></li>
                 </ul>
@@ -272,7 +277,7 @@ if($_POST[register]){
         </div>
       </div>
       <div class="col-md-4" style="border-bottom: 1px solid rgb(204, 204, 204); padding-bottom: 11px;">
-        <p class="em-warning-inverse"><a href="<?=SITE_PATH?>register" style="color:#FFFFFF;">Register Now (its free)</a></p>
+        <p class="em-warning-inverse"><a href="<?=SITE_PATH?>?register=true" style="color:#FFFFFF;">Register Now (its free)</a></p>
         <p style="padding-top: 20px;"> <span style="color:#01478f;  font-size: 24px;">119,681</span><span style="padding-left:13px; font-size: 12px;"> posted in past 3 days</span></p>
         <p><span style="color:#01478f; font-size: 24px;">$119,681</span><span style="padding-left:13px; font-size: 12px;">earned through Elance to date</span></p>
       </div>
@@ -286,89 +291,35 @@ if($_POST[register]){
         <table class="table table-striped table-striped-primary">
           <thead>
             <tr class="table_tr">
-              <th>RANK</th>
-              <th>fANTASY TEAM</th>
-              <th>W</th>
-              <th>L</th>
-              <th>NET RUN RATE</th>
+              <th>#</th>
+              <th>Series</th>
+              <th>Match</th>
+              
+              <th>Time</th>
             </tr>
           </thead>
-          <tbody>
-            <tr class="table_tr2">
-              <td>2</td>
-              <td>Balachandran32 <br>
-                Managed By Bala Chandran</td>
-              <td>1</td>
-              <td>0</td>
-              <td>2.700</td>
-            </tr>
-            <tr class="table_tr2">
-              <td>3</td>
-              <td>Jaswant88<br>
-                Managed By Bala Chandran</td>
-              <td>1</td>
-              <td>0</td>
-              <td>2.700</td>
-            </tr>
-            <tr class="table_tr2">
-              <td>4</td>
-              <td>Jaswant88<br>
-                Managed By Bala Chandran</td>
-              <td>1</td>
-              <td>0</td>
-              <td>2.700</td>
-            </tr>
-            <tr class="table_tr2">
-              <td>5</td>
-              <td>Jaswant88<br>
-                Managed By Bala Chandran</td>
-              <td>1</td>
-              <td>0</td>
-              <td>2.700</td>
-            </tr>
-            <tr class="table_tr2">
-              <td>6</td>
-              <td>Jaswant88<br>
-                Managed By Bala Chandran</td>
-              <td>1</td>
-              <td>0</td>
-              <td>2.700</td>
-            </tr>
-            <tr class="table_tr2">
-              <td>7</td>
-              <td>Jaswant88<br>
-                Managed By Bala Chandran</td>
-              <td>1</td>
-              <td>0</td>
-              <td>2.700</td>
-            </tr>
-            <tr class="table_tr2">
-              <td>7</td>
-              <td>Jaswant88<br>
-                Managed By Bala Chandran</td>
-              <td>1</td>
-              <td>0</td>
-              <td>2.700</td>
-            </tr>
-            <tr class="table_tr2">
-              <td>8</td>
-              <td>Jaswant88<br>
-                Managed By Bala Chandran</td>
-              <td>1</td>
-              <td>0</td>
-              <td>2.700</td>
-            </tr>
-            <tr class="table_tr2">
-              <td>9</td>
-              <td>Jaswant88<br>
-                Managed By Bala Chandran</td>
-              <td>1</td>
-              <td>0</td>
-              <td>2.700</td>
-            </tr>
-            <tr>
-              <td colspan="5"><a href="#" style="font-size:12px; color:#de391f;">VIEW FULL RANKINGS</a></td>
-            </tr>
+          <tbody><?php
+		    $date = date('Y-m-d h:i:s');
+			$result = $cms->db_query("select series_id,title,match_date from #_matches where status='Active' and match_date > '$date' order by match_date asc limit 9 ");
+			if(mysql_num_rows($result)){
+				$i = 1;
+				while($arrAdmin=$cms->db_fetch_array($result)){extract($arrAdmin);?>
+					<tr class="table_tr2">
+					  <td><?=$i?></td>
+					  <td><?=$cms->getSingleresult("select title from #_series where pid = '$series_id' ")?></td>
+					  <td><?=$title?></td> 
+					  <td><?=$match_date?></td>
+					</tr>  
+				<?php
+					$i++;
+				} 
+			}else{?>
+			<tr class="table_tr2">
+              <td colspan="4" align="center">Sorry no new match to be play..</td>
+               
+            </tr> 
+			<?php			
+			}?>
           </tbody>
         </table>
       </div>
@@ -397,22 +348,30 @@ if($_POST[register]){
       </div>
       <div class="col-lg-3">
         <?php
-		
-		?>
-        <p class="top_new2"> <img src="<?=SITE_PATH?>images/lock.png" align="left"><span style="padding-left: 7px;">PAKISTAN V AUSTRALIA<br>
-          <span style="font-size:11px; padding-left: 7px;">TESTS</span></span> </p>
-        <div class="box_2">
-          <p><img src="<?=SITE_PATH?>images/double_logo.jpg"></p>
-          <p style="font-size:12px; line-height: 18px;">2 FANTASY CRICKET MATCHES PAY TO PLAY ONLY</p>
-          <p class="play"><a href="#">PLAY ></a></p>
-        </div>
-        <p class="top_new2"> <img src="<?=SITE_PATH?>images/lock.png" align="left"><span style="padding-left: 7px;">PAKISTAN V AUSTRALIA<br>
-          <span style="font-size:11px; padding-left: 7px;">TESTS</span></span> </p>
-        <div class="box_2">
-          <p><img src="<?=SITE_PATH?>images/double_logo.jpg"></p>
-          <p style="font-size:12px; line-height: 18px;">2 FANTASY CRICKET MATCHES PAY TO PLAY ONLY</p>
-          <p class="play"><a href="#">PLAY ></a></p>
-        </div>
+		$date = date('Y-m-d h:i:s');
+			$result = $cms->db_query("select series_id,title,match_date,team1,team2 from #_matches where status='Active' and match_date > '$date' order by match_date asc limit 2 ");
+			if(mysql_num_rows($result)){
+				while($arrAdmin=$cms->db_fetch_array($result)){extract($arrAdmin);?>
+					<p class="top_new2"> <img src="<?=SITE_PATH?>images/lock.png" align="left">
+					 <span style="padding-left: 7px;"><?=$title?><br>
+					 <span style="font-size:11px; padding-left: 7px;">TESTS</span></span> 
+					</p>
+					<div class="box_2"> 
+					  <?php
+						$img1  = $cms->getSingleresult("select image from #_team where pid ='$team1'");
+						$img2  = $cms->getSingleresult("select image from #_team where pid ='$team2'");
+					  ?>
+					  <p><img width="56" height="54" src="<?=SITE_PATH?>/uploaded_files/orginal/<?=$img1?>"> <img width="56" height="54" src="<?=SITE_PATH?>/uploaded_files/orginal/<?=$img2?>"></p>
+					   
+					  <p class="play playgame" style="cursor:pointer;" >PLAY ></p>
+					</div>
+				<?php
+				} 
+			}else{?>
+
+			<?php 
+			}
+		?> 
       </div>
     </div>
   </section>

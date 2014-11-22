@@ -1,6 +1,6 @@
 <aside id="footer-widgets">
     <div class="container">
-        <div class="row">
+        <!--<div class="row">
             <div class="col-md-2">
                 <h3 class="footer-widget-title">PRODUCTS</h3>
                 <ul class="list-unstyled three_cols">
@@ -49,15 +49,25 @@
             </div>
             
             
-        </div> <!-- row -->
+        </div>--> <!-- row -->
     </div> <!-- container -->
 </aside>
 <footer id="footer">
 <div class="container">
         <div class="row">
-   <div style="text-align: right; width: 100%; float: right;"><strong>&copy; 2014 </strong><a href="#"><strong>PRIVACY POLICY</strong></a></div>
+   <div style="text-align: right; width: 100%; float: right;"><strong>&copy; <?=date('Y')?> </strong><a href="#"><strong><?=$_SERVER['HTTP_HOST']?></strong></a></div>
     
-  <div class="set2"> <a href="#">Sed ut</a> | <a href="#">Perspicia</a> | <a href="#">Sed ut</a> | <a href="#">Sed ut</a> |  <a href="#">Sed ut</a> |  <a href="#">Sed ut</a> |  <a href="#">Sed ut</a></div>
+  <div class="set2"><?php
+  	$chekc=$cms->db_query("select pid,heading,url from #_pages where status='Active' and fnav='yes' ");
+	$cnt = mysql_num_rows($chekc);
+	$i  =1;
+	while($rs=$cms->db_fetch_array($chekc)){ extract($rs);
+	    if($heading=='Home') $link = SITE_PATH; else $link = SITE_PATH.'page/'.$url; ?>
+		<a href="<?=$link?>"><?=$heading?></a> <?=($i!=$cnt)?' | ':''?>
+	<?php $i++;
+	}?>
+   
+   </div>
     
     </div></div>
 </footer>

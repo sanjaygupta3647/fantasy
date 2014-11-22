@@ -16,9 +16,19 @@ $arrAdmin=$cms->db_fetch_array($rsAdmin);
                 <li><a href="<?=$arrAdmin[lin]?>" target="_blank" class="animated fadeIn animation-delay-7 linkedin"><i class="fa fa-linkedin"></i></a></li>
             </ul>
             <div class="dropdown animated fadeInDown animation-delay-11">
-                <a href="<?=SITE_PATH?>register" class="dropdown-toggle" data-toggle="dropdown">Register</a>|
-                <a href="<?=SITE_PATH?>faq" class="dropdown-toggle" data-toggle="dropdown">Faq's</a>|
-                <a href="<?=SITE_PATH?>contact-us" class="dropdown-toggle" data-toggle="dropdown">Contact Us</a>
+				<a href="<?=SITE_PATH?>contact-us" class="dropdown-toggle link" data-toggle="dropdown">Contact Us</a>|
+			    <?php  $log = 0;  if($_SESSION['FBID'] || $_SESSION['userName']) $log = 1; if($log){?>
+				<a href="<?=SITE_PATH?>dashboard" class="dropdown-toggle link" data-toggle="dropdown">Dashboard</a>|
+				<a href="<?=SITE_PATH?>logout" class="dropdown-toggle link" data-toggle="dropdown">Logout</a> 
+				<?php }else{?>
+				<a href="<?=SITE_PATH?>" class="dropdown-toggle link" data-toggle="dropdown">Login</a>|
+				<a href="<?=SITE_PATH?>?register=true" class="dropdown-toggle link" data-toggle="dropdown">Register</a> 
+				<?php }?>
+
+
+                
+                
+               
             </div>
       
         </nav>
@@ -34,6 +44,32 @@ $arrAdmin=$cms->db_fetch_array($rsAdmin);
     <div class="container">
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
+			   <?php 
+			   $chekc=$cms->db_query("select pid,heading,url from #_pages where status='Active' and hnav='yes' and parent='0'");
+			    while($rs=$cms->db_fetch_array($chekc)){
+				         $menu2=$cms->db_query("select pid,heading,url from #_pages where status='Active' and hnav='yes' and 
+						 parent='".$rs[pid]."'");
+						 $cnt2 = mysql_num_rows($menu2);?>
+						<li <?=($cnt2)?'class="dropdown"':''?>>
+						  <a <?=($cnt2)?'class="dropdown-toggle" data-toggle="dropdown"':''?> 
+						  href="<?=($rs[heading]=='Home')?SITE_PATH:SITE_PATH.'page/'.$rs[url]?>"><?=$rs[heading]?></a>
+							<?php if($cnt2){?> 
+							<ul class="dropdown-menu dropdown-menu-left"><?php
+								while($rs2=$cms->db_fetch_array($menu2)){?>
+									<li >
+                                		<a href='<?=SITE_PATH.'page/'.$rs2[url]?>' ><?=$rs2[heading]?></a>
+									</li>
+								<?php
+								}
+							?> 
+							</ul>
+							<?php } ?> 
+						
+						</li>
+				<?php 
+				} 
+			    ?>
+			    <!--
                 <li class="active">
                 <a href="#">Home</a>
                      
@@ -43,64 +79,8 @@ $arrAdmin=$cms->db_fetch_array($rsAdmin);
                 </li>
                 <li class="dropdown">
                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">How to Play</a>
-                     <ul class="dropdown-menu dropdown-menu-left">
-                        <li class="dropdown-submenu">
-                                <a href="javascript:void(0);" class="has_children">About us & Team</a>
-                                <ul class="dropdown-menu dropdown-menu-left">
-                                <li><a href="page_about.html">About us Option 1</a></li>
-                                <li><a href="page_about2.html">About us Option 2</a></li>
-                                <li><a href="page_about3.html">About us & Team</a></li>
-                                <li class="divider"></li>                                        <li><a href="page_team.html">Our Team Option 1</a></li>
-                                <li><a href="page_team2.html">Our Team Option 2</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown-submenu">
-                                <a href="javascript:void(0);" class="has_children">Form</a>
-                                <ul class="dropdown-menu dropdown-menu-left">
-                                <li><a href="page_contact.html">Contact Option 1</a></li>
-                                <li><a href="page_contact2.html">Contact Option 2</a></li>
-                                <li class="divider"></li>                                        <li><a href="page_login.html">Login Integrated</a></li>
-                                <li><a href="page_login_full.html">Login Full Page</a></li>
-                                <li class="divider"></li>                                        <li><a href="page_login_register.html">Login and Register</a></li>
-                                <li><a href="page_register.html">Register Option 1</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown-submenu">
-                                <a href="javascript:void(0);" class="has_children">Profiles</a>
-                                <ul class="dropdown-menu dropdown-menu-left">
-                                <li><a href="page_profile.html">User Profile Option 1</a></li>
-                                <li><a href="page_profile2.html">User Profile Option 2</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown-submenu">
-                                <a href="javascript:void(0);" class="has_children">Error</a>
-                                <ul class="dropdown-menu dropdown-menu-left">
-                                <li><a href="page_404.html">Error 404 Full Page</a></li>
-                                <li><a href="page_404_2.html">Error 404 Integrated</a></li>
-                                <li><a href="page_500.html">Error 500 Full Page</a></li>
-                                <li><a href="page_500_2.html">Error 500 Integrated</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown-submenu">
-                                <a href="javascript:void(0);" class="has_children">Bussiness & Products</a>
-                                <ul class="dropdown-menu dropdown-menu-left">
-                                <li><a href="page_testimonial.html">Testimonials</a></li>
-                                <li><a href="page_clients.html">Our Clients</a></li>
-                                <li><a href="page_product.html">Products</a></li>
-                                <li><a href="page_services.html">Services</a></li>
-                            </ul>
-                        </li>
-
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Disclaimer and Risk Factors</a>
-                     
-                </li>
-                <li>
-                    <a href="<?=SITE_PATH?>term-condition">Terms and Conditions</a>
-                     
-                </li>
+                      
+                </li> -->
                 
              </ul>
         </div><!-- navbar-collapse -->

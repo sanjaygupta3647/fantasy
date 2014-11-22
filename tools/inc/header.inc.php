@@ -49,7 +49,7 @@ if(!$_SESSION["ses_adm_id"]){$cms->redir(SITE_PATH_ADM."login");die;}
   </div>
   <div class="aside">
     <ul class="nav2"> 
-       <li><a href="#">Content</a>
+       <li><a href="<?=SITE_PATH_ADM?>content/">Content</a>
         <div class="ul-arrow">
           <ul> 
              <li><a href="<?=SITE_PATH_ADM?>testimonials.php?mode=true">Testimonials</a></li>

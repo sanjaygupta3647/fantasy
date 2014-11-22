@@ -17,10 +17,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `cricket`
+-- Database: `fantacy`
 --
-CREATE DATABASE IF NOT EXISTS `cricket` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `cricket`;
+CREATE DATABASE IF NOT EXISTS `fantacy` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `fantacy`;
 
 -- --------------------------------------------------------
 

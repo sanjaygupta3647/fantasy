@@ -2,6 +2,8 @@
 <?php 
 	if($action=='del'){
 		$cms->db_query("delete from #_matches where pid in ($id)");
+		$cms->db_query("delete from #_batting where match_id in ($id)");
+		$cms->db_query("delete from #_balling where match_id in ($id)");
 		$adm->sessset('Record has been deleted', 'e');
 		$cms->createXmlFile();
 		$cms->redir(SITE_PATH_ADM.CPAGE, true);
@@ -13,6 +15,8 @@
 			switch ($_POST['action']){
 				case "delete":
 					$cms->db_query("delete from #_matches where pid in ($str_adm_ids)");
+				    $cms->db_query("delete from #_batting where match_id in ($str_adm_ids)");
+					$cms->db_query("delete from #_balling where match_id in ($str_adm_ids)");
 					$adm->sessset(count($arr_ids).' Item(s) Delete', 'e');
 					$cms->createXmlFile();
 					break;
@@ -56,9 +60,8 @@
     <tr class="t-hdr">
       <td width="6%" align="center"><?=$adm->orders('#',false)?></td>
       <td width="6%" align="center" valign="middle"><?=$adm->check_all()?></td>
-      <td width="20%" align="center"><?=$adm->orders('Title',true)?></td>   
-	  <td width="20%" align="center"><?=$adm->orders('Series',true)?></td>
-	 
+      <td width="30%" align="center"><?=$adm->orders('Title',true)?></td>   
+	  <td width="20%" align="center"><?=$adm->orders('Series',true)?></td> 
 	  <td width="10%" align="center"><?=$adm->orders('Time',true)?></td>   
 	  <td width="5%" align="center"><?=$adm->orders('Status',true)?></td>
       <td width="12%" align="center"><?=$adm->norders('Action')?></td>
@@ -67,7 +70,12 @@
     <tr <?=$adm->even_odd($nums)?>>
     <td align="center"><?=$nums?></td>
     <td align="center"><?=$adm->check_input($pid)?></td>
-    <td align="center"><a href="<?=SITE_PATH."tools/team_wizzard?mode=add&match_id=".$pid?>"><?=$title?></a></td> 
+    <td align="center">
+	<b><?=$title?></b>&nbsp;  | &nbsp; 
+	[<a href="<?=SITE_PATH."tools/match-summary/?match_id=".$pid?>">Summary</a>] &nbsp; 
+
+	
+	</td> 
 	<td align="center"><?=$cms->getSingleresult("select title from #_series where pid = '$series_id'")?></td>
 	 
      <td align="center" ><?=date("d M, Y",strtotime($match_date))?></td>
