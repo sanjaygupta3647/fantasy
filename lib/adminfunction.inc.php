@@ -158,6 +158,7 @@ class ADMIN_DAL {
 		$vals = str_replace("(", "-",$vals);
 		$vals = str_replace(")", "-",$vals);
 		$vals = str_replace("&", "-",$vals);
+		$vals = str_replace("?", "-",$vals);
 		$vals = str_replace("#", "-",$vals);
 		$vals = str_replace("---", "-",$vals);
 		$vals = str_replace("--", "-",$vals);
