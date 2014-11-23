@@ -46,6 +46,7 @@
       <td width="10%" align="center"><?=$adm->orders('#',false)?></td>
       <td width="10%" align="center" valign="middle"><?=$adm->check_all()?></td>
       <td width="20%" align="center"><?=$adm->orders('Gift Name',true)?></td>   
+	  <td width="15%" align="center"><?=$adm->orders('Image',true)?></td>  
 	  <td width="15%" align="center"><?=$adm->orders('Get Points',true)?></td>   
 	  
 	  <td width="15%" align="center"><?=$adm->orders('Status',true)?></td>
@@ -56,6 +57,11 @@
     <td align="center"><?=$nums?></td>
     <td align="center"><?=$adm->check_input($pid)?></td>
     <td align="center"><?=$giftName?></td>
+	<td align="center"><?php
+	 if($image and is_file($_SERVER['DOCUMENT_ROOT'].SITE_SUB_PATH."uploaded_files/orginal/".$image)==true){?>
+		<img src="<?=SITE_PATH?>uploaded_files/orginal/<?=$image?>" height="75">
+	 <?}else echo "N/A"; 
+	 ?></td>
     <td align="center"><?=$get_points?></td>
 	<td align="center" class="<?=strtolower($status)?>"><?=$status?></td>
 	<td align="center"><?=$adm->action(SITE_PATH_ADM.CPAGE."?mode=add",$pid)?></td>

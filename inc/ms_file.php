@@ -1,4 +1,3 @@
- 
 <?
    // putenv("TZ=Asia/Calcutta");		
  	if(count($items) > 1)

@@ -5,7 +5,6 @@ if($loadpage=='site/dashboard.php'){?>
 <script type="text/javascript" src="<?=SITE_PATH?>js/jquery-2.0.3.js"></script>
 <script type="text/javascript" src="<?=SITE_PATH?>js/jquery.countdownTimer.js"></script>
 <script>
-//"2016/01/01 00:00:00"
 $(function(){
 	var cnt  = '<?=$total_match?>'; 
 	for(var i=1; i<=cnt;i++){  
@@ -52,6 +51,23 @@ if($loadpage=='site/index.php'){?>
 			alert('Please login to predict match!');
 		}
 	}); 
+
+	$("#showpassform").click(function(){
+		$(this).hide();
+		$(".showpass").show();
+	});
+	$("#getpass").click(function(){
+		var getemail = $("#forgotemail").val(); 
+		$.ajax({
+		    url : "<?=SITE_PATH?>ms_file/forgotpass/?email="+getemail, 
+		    success: function(data, textStatus, jqXHR){  
+		       	$("#forgotpassmsg").html(data);  
+		    },
+		    error: function (jqXHR, textStatus, errorThrown){
+		 		alert(errorThrown);
+		    }
+		});
+	});
 <?php
 }
 ?> 
