@@ -13,7 +13,7 @@
 	@extract($_SERVER);
 	@extract($_SESSION);
 	
-	//error_reporting(1);
+	//error_reporting(0);
 	@error_reporting(E_ALL ^ E_NOTICE);
 	
 	ini_set('register_globals', 'on');	
@@ -64,11 +64,11 @@
 		$tbl = basename($_SERVER['REQUEST_URI'], ".html");		
 	}
 	//$pageinfo = $cms->pageinfo($tbl);	
-	/*$pagen = (($tbl)?$tbl:'index'); 
+	//$pagen = (($tbl)?$tbl:'index'); 
 	define('SITE_MAIL', $cms->getSingleresult("select email from #_setting where `id`='1'"));
 	define('SITE_PHONE', $cms->getSingleresult("select phone from #_setting where `id`='1'"));
 	define('COMP_NAME', $cms->getSingleresult("select company from #_setting where `id`='1'"));
-	define('SITE_ADDR', $cms->getSingleresult("select address from #_setting where `id`='1'"));*/
+	define('SITE_ADDR', $cms->getSingleresult("select address from #_setting where `id`='1'")); 
 	
 	$month = array (1=>"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
  	$folder_array = explode("/", $_SERVER['REQUEST_URI']);
