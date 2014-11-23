@@ -1,29 +1,43 @@
 <div class="tab-pane active" id="home2"><?php
-$date = date('Y-m-d h:i:s');
-$result = $cms->db_query("select series_id,url,title,match_date,team1,team2 from #_matches where status='Active' and match_date > '$date' 
+
+/*$result = $cms->db_query("select series_id,url,title,match_date,team1,team2 from #_matches where status='Active' and match_date > '$date' 
 order by match_date asc  ");
-$total_match = mysql_num_rows($result);
+$total_match = mysql_num_rows($result);*/
+
+include "site/Paging.php";
+$date = date('Y-m-d h:i:s');
+$Obj=new Paging("select series_id,url,title,match_date,team1,team2 from pro_matches where status='Active' and match_date > '$date' 
+order by match_date asc ");
+$Obj->setLimit(10);//set record limit per page
+$limit=$Obj->getLimit();
+$offset=$Obj->getOffset($_REQUEST["page"]); 
+ 
+$sql="select series_id,url,title,match_date,team1,team2 from pro_matches where status='Active' and match_date > '$date' 
+order by match_date asc   limit $offset, $limit";
+$searchexe = $cms->db_query($sql);
+$total_match = mysql_num_rows($searchexe);
+
 if($total_match){
 	$i = 1;
-	while($arrAdmin=$cms->db_fetch_array($result)){extract($arrAdmin);?>
+	while($arrAdmin=$cms->db_fetch_array($searchexe)){extract($arrAdmin);?>
 		<table class="table table-bordered">
 			<thead>
 			  <tr><?php 
-				$img1  = $cms->getSingleresult("select image from #_team where pid ='$team1'");
-				$img2  = $cms->getSingleresult("select image from #_team where pid ='$team2'"); 
+				  $img1  = $cms->getSingleresult("select image from #_team where pid ='$team1'");
+				  $img2  = $cms->getSingleresult("select image from #_team where pid ='$team2'"); 
 			    ?>
-				<td id="blenk">
-				<img width="56" height="54" src="<?=SITE_PATH?>/uploaded_files/orginal/<?=$img1?>">
+				<td id="blenk" width="30%">
+				<img width="56" height="54" src="uploaded_files/orginal/<?=$img1?>">
 				&nbsp;&nbsp;  <span>Vs</span>  &nbsp;&nbsp;
-				<img width="56" height="54" src="<?=SITE_PATH?>/uploaded_files/orginal/<?=$img2?>"></td> 
-				<td align="center"><?=$title?> <br/><?=$match_date?> GMT </td>
-				  <td align="center"> <?=$match_date?> GMT </td> 
+				<img width="56" height="54" src="uploaded_files/orginal/<?=$img2?>"></td> 
+				<td align="center" width="40%"><a href="<?=SITE_PATH?>predict/<?=$url?>"><?=$title?></a> <br/><?=$match_date?> GMT </td>
+				  <!--<td align="center"> <?=$match_date?> GMT </td> -->
 				  <td align="center"> 
 				  <input type="hidden" id="countdown<?=$i?>" value="<?=date("Y/m/d h:i:s", strtotime($match_date))?>" />
-				  <span id="time_<?=$i?>"></span><br/>
-				  <a href="<?=SITE_PATH?>predict/<?=$url?>" 
+				  <span style="float: left;" id="time_<?=$i?>"></span>
+				  <!--<a href="<?=SITE_PATH?>predict/<?=$url?>" 
 				  style="background-color: rgb(0, 116, 255); color: rgb(255, 255, 255); padding: 3px 27px; border-radius: 3px; 
-				  margin-top: 16px; float: left;">Predict</a></td>
+				  margin-top: 16px; float: left;">Predict</a>--></td>
 			  </tr>
 			</thead>
   		</table>
@@ -34,5 +48,5 @@ if($total_match){
 				
 				
   
-   
+<div class="pag_no"><?php $Obj->getPageNo(); ?></div>   
 </div>

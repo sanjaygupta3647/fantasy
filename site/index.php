@@ -105,11 +105,17 @@ if($_POST[register]){
                       <div class="input-group login-input"> <span class="input-group-addon"><i class="fa fa-lock"></i></span>
                         <input class="form-control" placeholder="Password" name="password" type="password">
                       </div>
+					  
 					  <?=$postmsg?>
                       <hr class="dotted margin-10">
                       <button type="submit" class="btn btn-ar btn-primary pull-right">Sign in</button>
-                      <a href="#" class="social-icon-ar sm twitter animated fadeInDown animation-delay-2">Forgotten password</a>
+                      <a href="javascript:void(0);" id="showpassform"  class="social-icon-ar sm twitter animated fadeInDown animation-delay-2">Forgotten password</a>
                       <hr class="dotted margin-10">
+					  <div class="form-group showpass" style="display: none;">
+						<input style="width: 45%;height: 33px;" placeholder="Enter Your Email Id" id="forgotemail" type="email" value="<?=$_POST[emailId]?>" name="emailId">
+						<button type="button" id="getpass" class="btn btn-ar btn-primary" >Get Password</button>
+							<span id="forgotpassmsg"></span>
+					  </div>
                     </div>
 					</form>
                   </div>
