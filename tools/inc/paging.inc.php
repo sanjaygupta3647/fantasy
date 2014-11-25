@@ -1,4 +1,4 @@
-<?php 
+<?php  
 if($reccnt>$pagesize){
 	$num_pages=$reccnt/$pagesize;
 	$qry_str=$_SERVER['argv'][0];

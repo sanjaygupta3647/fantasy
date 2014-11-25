@@ -1,54 +1,74 @@
+<?php
+if(!$_SESSION['userName']) $cms->redir(SITE_PATH, true);
+$metaTitle = $cms->getSingleresult("select metatitle from pro_matches where pid = '".$items[2]."'");
+$metaIntro = $cms->getSingleresult("select metakey from pro_matches where pid = '".$items[2]."'");
+$metaKeyword = $cms->getSingleresult("select metadesc from pro_matches where pid = '".$items[2]."'"); 
+?>
 <div class="container">
   <div class="row" style="margin-top: 40px;">
     <?php include "site/left-pannel.php";  ?>
     <div class="col-md-9">
       <!-- Nav tabs -->
       <ul class="nav nav-tabs nav-tabs-ar nav-tabs-ar-white">
-        <li class="active"><a href="#home2" data-toggle="tab">Multiple Coice Questions</a></li>
-        <li><a href="#profile2" data-toggle="tab">Fill in the Blanks</a></li>
-        <li><a href="#messages2" data-toggle="tab">Unscramble</a></li>
-        <li><a href="#settings2" data-toggle="tab">Find the word</a></li>
-        <li><a href="#settings22" data-toggle="tab">Match the Followings</a></li>
+        <li class="active"><a href="#home2" data-toggle="tab">Options</a></li>
+        <li><a href="#profile2" data-toggle="tab">Score</a></li>
+        
       </ul>
       <!-- Tab panes -->
       <div class="tab-content">
         <div class="tab-pane active" id="home2">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <td id="blenk"><img src="images/about_logo.jpg" class="img-responsive"></td>
-                <td align="center">19 Nov 2014<br>
-                  01 :00 GMT </td>
-                <td align="center"><a href="#" style="background-color:#7f7f7f; color: rgb(255, 255, 255); padding: 3px 27px; border-radius: 3px; margin-top: 16px; float: left;">Predict</a></td>
-                <td align="center">Match Scheduled To began at<br>
-                  14:00:00 Loacl Time<br>
-                  (01 :00 GMT) </td>
-              </tr>
-            </thead>
-          </table>
+		<?php
+	$sql="select series_id,pid,url,title,match_date,team1,team2 from pro_matches where pid = '".$items[2]."'";
+	$searchexe = $cms->db_query($sql);
+	$total_match = mysql_num_rows($searchexe);
+    if($total_match){
+	$i = 1;
+	while($arrAdmin=$cms->db_fetch_array($searchexe)){extract($arrAdmin);?>
+		<table class="table table-bordered">
+			<thead>
+			  <tr><?php 
+				  $img1  = $cms->getSingleresult("select image from #_team where pid ='$team1'");
+				  $img2  = $cms->getSingleresult("select image from #_team where pid ='$team2'"); 
+			    ?>
+				<td id="blenk" width="30%">
+				<img width="56" height="54" src="uploaded_files/orginal/<?=$img1?>">
+				&nbsp;&nbsp;  <span>Vs</span>  &nbsp;&nbsp;
+				<img width="56" height="54" src="uploaded_files/orginal/<?=$img2?>"></td> 
+				<td align="center" width="40%"><a href="<?=SITE_PATH?>predict/<?=$url?>/<?=$pid?>"><?=$title?></a> <br/><?=$match_date?> GMT </td>
+				  <!--<td align="center"> <?=$match_date?> GMT </td> -->
+				  <td align="center"> 
+				  <input type="hidden" id="countdown<?=$i?>" value="<?=date("Y/m/d H:i:s", strtotime($match_date))?>" />
+				  <span style="float: left;" id="time_<?=$i?>"></span>
+				  <!--<a href="<?=SITE_PATH?>predict/<?=$url?>" 
+				  style="background-color: rgb(0, 116, 255); color: rgb(255, 255, 255); padding: 3px 27px; border-radius: 3px; 
+				  margin-top: 16px; float: left;">Predict</a>--></td>
+			  </tr>
+			</thead>
+  		</table>
+	
+	<?php	$i++;
+	}
+}?>
           <div class="row">
             <div class="col-lg-8">
-              <form role="form">
-                <h5 style="color: rgb(0, 0, 0); text-decoration: underline;">SELECT YOUR OPTIONS TO PREDICT</h5>
-                <div class="form-group">
-                  <label for="InputName" class="lable_about">Which Team Will Win</label>
-                  <a href="#" class="predict">Predict & Win 100 Points</a> </div>
-                <div class="form-group">
-                  <label for="InputEmail1" class="lable_about">Select Yours Favorite Player</label>
-                  <a href="#" class="predict">Predict & Win 100 Points</a> </div>
-                <div class="form-group">
-                  <label for="InputEmail1" class="lable_about">Total Score</label>
-                  <a href="#" class="predict">Predict & Win 100 Points</a> </div>
-                <div class="form-group">
-                  <label for="InputEmail1" class="lable_about">Total Score</label>
-                  <a href="#" class="predict">Predict & Win 100 Points</a> </div>
-                <div class="form-group">
-                  <label for="InputEmail1" class="lable_about">Who will score how much</label>
-                  <a href="#" class="predict">Predict & Win 100 Points</a> </div>
-                <div class="form-group">
-                  <label for="InputEmail1" class="lable_about">Who will score how much</label>
-                  <a href="#" class="predict">Predict & Win 100 Points</a> </div>
-              </form>
+               
+				<h5 style="color: rgb(0, 0, 0); text-decoration: underline;">SELECT YOUR OPTIONS TO PREDICT</h5>
+				<?php
+			     $result = $cms->db_query("select * from #_prediction where status = 'Active'   ");
+				 while($arrAdmin=$cms->db_fetch_array($result)){extract($arrAdmin);?>
+					<div class="form-group">
+					  <label for="InputName" class="lable_about"><?=$prediction?></label>
+					  <?php
+                       $url = "prediction-detail/".$items[2]."/".$adm->baseurl($prediction.'-Predict & Win-'.$prediction_points)."-points/".$pid;
+					  ?>
+					  <a href="<?=$url?>" class="predict">Predict & Win <?=$prediction_points?> Points</a> 
+					</div><?php 
+				 }
+                ?>
+
+				 
+                 
+              
             </div>
             <div class="col-lg-4">
               <div style="border-radius: 7px; background-color:#bbb; height: 410px; margin-top: 12px;">
@@ -56,10 +76,10 @@
                 <marquee  onMouseOver="this.scrollAmount=0" onMouseOut="this.scrollAmount=2" scrollamount="2" direction="up" loop="true" width="100%" height="350">
                 <center>
                   <?php 
-$rsAdmin=$cms->db_query("SELECT * FROM #_testimonials WHERE id='1' AND status='Active'");
-$arrAdmin=$cms->db_fetch_array($rsAdmin);
-@extract($arrAdmin);
-?>
+					$rsAdmin=$cms->db_query("SELECT * FROM #_testimonials WHERE id='1' AND status='Active'");
+					$arrAdmin=$cms->db_fetch_array($rsAdmin);
+					@extract($arrAdmin);
+					?>
                   <p>
                     <?=$arrAdmin[testimonials]?>
                   </p>
@@ -88,221 +108,11 @@ $arrAdmin=$cms->db_fetch_array($rsAdmin);
                 </div>
               </li>
               <?php } ?>
-            </ul>
-            <!--
-        </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-          </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-        </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-          </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-        </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-          </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-        </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-          </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-        </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-          </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-        </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-          </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-        </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-          </li>
-       <li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-        </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-          </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-        </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-          </li>
-          <li style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-        </li>
-        <li style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-          </li>
-          <li style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-        </li>
-        <li style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-          </li>
-          <li style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-        </li>
-        <li style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-          </li>
-          <li style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-        </li>
-        <li style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-          </li>
-          <li style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-        </li>
-        <li style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-          </li>
-          <li style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-        </li>
-        <li style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-          </li>
-        <li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-        </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-          </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-        </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-          </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-        </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-          </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-        </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-          </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-        </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-          </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-        </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-          </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-        </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-          </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-        </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-          </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-        </li><li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 98px; margin-right: 30px;">
-            <div class="img-caption-ar">
-                <img src="images/one_slids.jpg" class="img-responsive" alt="Image">
-            </div>
-          </li></ul></div><div class="bx-controls"></div></div></div><div class="bx-controls"></div></div>
-       
-       
-       
-       -->
+            </ul> 
           </div>
         </div>
-        <div class="tab-pane" id="profile2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, at, laboriosam, possimus, nam rem quia reiciendis sit vel totam id eum quasi aperiam officiis omnis ipsum quo praesentium quaerat unde mollitia maiores. Dignissimos, deleniti, eos, quibusdam quae voluptatibus obcaecati voluptatum iure quas voluptates cupiditate incidunt voluptate dolorem delectus exercitationem earum?</div>
-        <div class="tab-pane" id="messages2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt, ipsam, distinctio, ea quas quam mollitia enim dolorem aliquam laboriosam exercitationem ullam iste quis possimus aut atque est beatae temporibus impedit deleniti explicabo ratione esse molestias maiores minima odit? Tempore, omnis, possimus praesentium minus iusto laboriosam vitae officiis deserunt voluptate odio.</div>
-        <div class="tab-pane" id="settings2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, blanditiis, ea quam minus aliquid libero quibusdam eos incidunt quo accusantium itaque veritatis reprehenderit optio provident nostrum ipsam aliquam voluptate officia voluptatem magni vitae nisi error maiores dolor natus at perferendis. Eligendi, a deserunt voluptatibus facere dolores rem molestias ad magnam!</div>
-        <div class="tab-pane" id="settings22">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, blanditiis, ea quam minus aliquid libero quibusdam eos incidunt quo accusantium itaque veritatis reprehenderit optio provident nostrum ipsam aliquam voluptate officia voluptatem magni vitae nisi error maiores dolor natus at perferendis. Eligendi, a deserunt voluptatibus facere dolores rem molestias ad magnam!</div>
+        <div class="tab-pane" id="profile2">Score coming soon..</div>
+         
       </div>
     </div>
   </div>

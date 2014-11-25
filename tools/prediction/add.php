@@ -25,19 +25,51 @@ if(isset($id)){
 		<td>
 			<select  class="txt medium"  name="prediction" class="select" lang="R" title="Status">
 				<option value="">Select</option>
-				<option value="Team Win" <?=(($prediction=='Team Win')?'selected="selected"':'')?>>Team Win</option>
-				<option value="Team Wins Toss" <?=(($prediction=='Team Wins Toss')?'selected="selected"':'')?>>Team Wins Toss</option>
-				<option value="Runs in 1st over" <?=(($prediction=='Runs in 1st over')?'selected="selected"':'')?>>Runs scored in 1st over</option>
-				<option value="Man of the Match" <?=(($prediction=='Man of the Match')?'selected="selected"':'')?>>Man of the Match</option>
-				<option value="Total Score Team1" <?=(($prediction=='Total Score Team1')?'selected="selected"':'')?>>Total Score by (Team1)</option>
-				<option value="Total Score Team2" <?=(($prediction=='Total Score Team2')?'selected="selected"':'')?>>Total Score by (Team2)</option>
+				<?php
+					foreach($predictionlist as $val){?>
+						<option value="<?=$val?>" <?=(($prediction==$val)?'selected="selected"':'')?>><?=$val?></option>
+					<?php
+					}
+				?> 
 				</select>
 		</td>
+    </tr>
+	<tr  class="">
+	  <td valign="top" class="label">Description :</td>
+	
+	  <td>
+	  <?=$adm->get_editor('body',stripslashes($body))?>
+	 </td>
     </tr>
 	<tr>
 		<td width="25%"  class="label">Prediction Points:</td>
 		<td width="75%"><input type="text" name="prediction_points"  lang="R" title="team Name" class="txt medium" value="<?=$prediction_points?>" style="width: 17%;"/></td>
     </tr>
+	
+	<tr>
+	  <td class="label">Prediction Open Till:<span>*</span></td>
+	  <td>
+		  <select  class="txt medium"  name="prediction_before_after" class="select" lang="R" title="Status">
+			<option value="before" <?=(($prediction_before_after=='before')?'selected="selected"':'')?>>Before</option>
+			<option value="after" <?=(($prediction_before_after=='after')?'selected="selected"':'')?>>After</option>
+		  </select>	  
+	  </td>
+    </tr>
+
+	<tr>
+	  <td class="label">Time:<span>*</span></td>
+	  <td>
+		  <select  class="txt medium"  name="minutes" class="select" lang="R" title="Time"> 
+			<?php
+				for($i=0; $i<=1000; $i++){?>
+					<option value="<?=$i?>" <?=(($minutes==$i)?'selected="selected"':'')?>><?=$i?> Minutes</option>
+				<?php
+				}
+			?> 
+		  </select>	  
+	  </td>
+    </tr>
+
 	<tr>
 	  <td class="label">Status:<span>*</span></td>
 	  <td><select  class="txt medium"  name="status" class="select" lang="R" title="Status">
@@ -45,6 +77,7 @@ if(isset($id)){
 	  <option value="Inactive" <?=(($status=='Inactive')?'selected="selected"':'')?>>Inactive</option>
 	  </select>	  </td>
     </tr>
+	
 	 
     
 	<tr>

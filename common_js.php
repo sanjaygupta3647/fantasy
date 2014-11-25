@@ -1,7 +1,7 @@
 <script src="<?=SITE_PATH?>js/jquery.min.js"></script>
 <script src="<?=SITE_PATH?>js/jquery-1.7.1.min.js"></script>
-<?php
-if($loadpage=='site/dashboard.php'){?>
+<?php 
+if($loadpage=='site/dashboard.php' || $loadpage=='site/predict.php' || $loadpage=='site/prediction-detail.php'){?>
 <script type="text/javascript" src="<?=SITE_PATH?>js/jquery-2.0.3.js"></script>
 <script type="text/javascript" src="<?=SITE_PATH?>js/jquery.countdownTimer.js"></script>
 <script>
@@ -71,4 +71,50 @@ if($loadpage=='site/index.php'){?>
 <?php
 }
 ?> 
+<?php 
+if($loadpage=='site/dashboard.php'){?>
+var maxpage = '<?=$totpage?>';
+var paging  = '<?=$limitpage?>';
+$("#nextpage").click(function(){
+	var curpage = $(this).attr('lang');
+	ajaxpageing(curpage);
+	var prevpage =$("#prevpage").attr('lang'); 
+	//alert(curpage+ ' and ' +prevpage);
+	if(curpage<maxpage){
+		curpage++;
+		prevpage++;
+		$("#prevpage").attr('lang',prevpage);
+		$(this).attr('lang',curpage);
+	}else{
+		$(this).hide('slow');
+		$("#prevpage").show('slow');
+	} 
+});
+$("#prevpage").click(function(){
+	var curpage = $(this).attr('lang');
+	ajaxpageing(curpage);
+	var nextpage =$("#nextpage").attr('lang'); 
+	//alert(curpage+ ' and ' +nextpage);
+	if(curpage>1){
+		curpage--;
+		nextpage--;
+		$("#nextpage").attr('lang',nextpage);
+		$(this).attr('lang',curpage);
+	}else{
+		$(this).hide('slow');
+		$("#nextpage").show('slow');
+	} 
+});
+function ajaxpageing(page){ 
+	$.ajax({
+	    url : "<?=SITE_PATH?>ms_file/history-paging/?page="+page, 
+	    success: function(data, textStatus, jqXHR){  
+	       	$("#userpredictionpage").html(data);  
+	    },
+	    error: function (jqXHR, textStatus, errorThrown){
+	 		alert(errorThrown);
+	    }
+	});
+}
+<?php }?>
 </script>

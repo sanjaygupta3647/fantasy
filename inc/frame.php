@@ -50,6 +50,11 @@ ob_start();
 <body>
 <div id="sb-site">
 	<div class="boxed">
+	     <?php
+		 if($_SESSION['pid']){
+			 $arrCheck = $cms->db_query("SELECT * FROM #_user WHERE pid = '".$_SESSION['pid']."' AND userName = '".$_SESSION['userName']."'");
+			 $udetl = $cms->db_fetch_array($arrCheck);
+		 } ?>
 		<?php include "header.php"; ?> 
 		<?php include_once $loadpage; ?>  
 		<?php include "footer.php"; ?>  

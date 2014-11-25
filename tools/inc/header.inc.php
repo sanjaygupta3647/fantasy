@@ -108,14 +108,25 @@ if(!$_SESSION["ses_adm_id"]){$cms->redir(SITE_PATH_ADM."login");die;}
 			  </ul>
 			</div> 
 		</li>
-		 <li><a href="#">News Management</a>
+		<li><a href="#">User</a>
         <div class="ul-arrow">
-          <ul>
-           
+          <ul> 
+             <li><a href="<?=SITE_PATH_ADM?>user/?mode=add">Add User</a></li>
+            <li><a href="<?=SITE_PATH_ADM?>user/">Manage Users</a></li> 
+          </ul>
+        </div> </li>
+
+	  
+              
+        <li><a href="<?=SITE_PATH_ADM?>view-prediction/">Manage User Prediction</a></li> 
+        
+		<!-- <li><a href="#">News Management</a>
+        <div class="ul-arrow">
+          <ul> 
              <li><a href="<?=SITE_PATH_ADM?>news/?mode=add">Add News</a></li>
             <li><a href="<?=SITE_PATH_ADM?>news/">Manage News</a></li> 
           </ul>
-        </div> </li>
+        </div> </li>-->
 		 
     </ul>
 </div>

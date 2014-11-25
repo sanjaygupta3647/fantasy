@@ -46,8 +46,11 @@
       <td width="10%" align="center"><?=$adm->orders('#',false)?></td>
       <td width="10%" align="center" valign="middle"><?=$adm->check_all()?></td>
       <td width="20%" align="center"><?=$adm->orders('Prediction',true)?></td>   
-	  <td width="15%" align="center"><?=$adm->orders('Prediction Points',true)?></td>   
+	  <td width="15%" align="center"><?=$adm->orders('Prediction Points',true)?></td>
 	  
+	  <td width="12%" align="center"><?=$adm->norders('Prediction Open Till')?></td>
+	  <td width="12%" align="center"><?=$adm->norders('Time')?></td>
+
 	  <td width="15%" align="center"><?=$adm->orders('Status',true)?></td>
       <td width="12%" align="center"><?=$adm->norders('Action')?></td>
     </tr>
@@ -57,6 +60,8 @@
     <td align="center"><?=$adm->check_input($pid)?></td>
     <td align="center"><?=$prediction?></td>
     <td align="center"><?=$prediction_points?></td>
+	<td align="center"><?=ucfirst($prediction_before_after)?></td>
+	<td align="center"><?=$minutes?> Minutes</td>
 	<td align="center" class="<?=strtolower($status)?>"><?=$status?></td>
 	<td align="center"><?=$adm->action(SITE_PATH_ADM.CPAGE."?mode=add",$pid)?></td>
     </tr>

@@ -2,6 +2,11 @@
 <?php 
 $series_id = $cms->getSingleresult("SELECT series_id FROM #_matches WHERE pid = '".$match_id."'");
 if($cms->is_post_back()){ 
+	$checkforruns = $cms->getSingleresult("select count(*) from #_total_run where match_id = '$match_id' "); 
+	if($checkforruns)  $cms->db_query("delete from  #_total_run where match_id = '$match_id' ");
+	foreach($_POST[teamid] as $key=>$val){
+		$cms->db_query("insert into #_total_run set match_id = '$match_id', team_id = '".$val."', runs = '".$_POST[teamrun][$key]."' ");
+	}
 	if(isset($match_id)){ 
 		$check = $cms->getSingleresult("select count(*) from #_match_summary where match_id = '".$match_id."' ");
 		$_POST[match_id] = $match_id;
@@ -61,6 +66,7 @@ if(isset($match_id)){
 		</td>
 		
     </tr>
+
 	<tr>
 		<td width="20%"  class="label">First Batting:</td>
 		<td width="80%">
@@ -76,7 +82,19 @@ if(isset($match_id)){
 		</td> 
     </tr>
 
-	 
+	<tr>
+		<td width="20%"  class="label">Total Run <?=$team1name?> :</td>
+		<?php $team1run =  $cms->getSingleresult("select runs from #_total_run where team_id = '".$arrMatches[team1]."' and match_id = '$match_id' "); ?>
+		<td width="80%"><input type="text" name="teamrun[]"  title="over" class="txt medium" value="<?=$team1run?>" />
+		<input type="hidden" name="teamid[]"    value="<?=$arrMatches[team1]?>" /> </td>
+	</tr>
+
+	<tr>
+		<td width="20%"  class="label">Total Run <?=$team2name?> :</td>
+		<?php $team2run =  $cms->getSingleresult("select runs from #_total_run where team_id = '".$arrMatches[team2]."' and match_id = '$match_id' "); ?>
+		<td width="80%"><input type="text" name="teamrun[]"  title="over" class="txt medium" value="<?=$team2run?>" />
+		<input type="hidden" name="teamid[]"    value="<?=$arrMatches[team2]?>" /> </td>
+	</tr>
 
 	<tr>
 		<td width="20%"  class="label">Winner team:</td>
