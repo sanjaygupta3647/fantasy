@@ -7,7 +7,7 @@
 			array_pop($items);
 		}
 	} 
-	
+	date_default_timezone_set("Asia/Kolkata"); 
 	@extract($_POST);
 	@extract($_GET);
 	@extract($_SERVER);
@@ -72,6 +72,7 @@
 	
 	$month = array (1=>"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
  	$folder_array = explode("/", $_SERVER['REQUEST_URI']);
+	$predictionlist = array (1=>"Who will win the match?", "Who will win the toss?", "Predict total score of team", "Predict runs in 1st over", "Man of the Match");
 	define("CPAGE",$folder_array[sizeof($folder_array)-2]);
 	/*$SITE_conts = $cms->db_query("select * from ".tb_Prefix."setting where id='1'");
 	$SITE_CONTF = $cms->db_fetch_array($SITE_conts); 

@@ -3791,5 +3791,102 @@ class DAL {
 		}
 		return $timezone;
 	  }
+	  function getMinutes($date1){ 
+		    $date1timestamp = strtotime($date1);
+		    $date2timestamp = time();
+			$all = (int)round(($date1timestamp - $date2timestamp) / 60);
+			$d = (int)floor ($all / 1440);
+			if($d<1) $d = 0;
+			$h = (int)floor (($all - $d * 1440) / 60);
+			if($h<1) $h = 0;
+			$m = $all - ($d * 1440) - ($h * 60);
+			
+			$min_h = 0;
+			$min_d = 0;
+
+			if($h>0){ $min_h = $h*60;}
+			if($d>0){ $min_d = $d*60*60;}
+			$total =  $m + $min_h + $min_d; 
+			//return  $total;
+			 return array('days'=>$d,'hours'=>$h, 'mins'=>$m, 'total_minutes'=>$total); 
+	 }
+	 function checkBeforeAfter($t){
+		 $date1 = str_replace('-','',date("Y-m-d H:i:s"));
+		 $date2 = str_replace(' ','',$date1);
+		 $date3 = str_replace(':','',$date2);
+		 $date = (int)$date3;
+		 return $date;
+
+	 }
+	function getPoins($user_id){
+		$total = $this->getSingleresult("select sum(points) from #_user_prediction where status = 'win' and user_id = '$user_id' ");
+		$correct_prediction = $this->getSingleresult("select count(*) from #_user_prediction where status = 'win' and user_id = '$user_id' ");
+		$redeem = $this->getSingleresult("select sum(points) from #_redeem where  user_id = '$user_id' ");
+		$remain =  $total-$redeem;
+		$arr[totalpoints] = $total;
+		$arr[redeem] = $redeem;
+		$arr[correct_prediction] = $correct_prediction;
+		$arr[remain] = $remain;
+		return $arr;
+	
+	}
+	function updatePoints(){
+		$result = $this->db_query("select * from #_user_prediction where status = 'open' ");
+		if(mysql_num_rows($result)){
+			while($line = $this->db_fetch_array($result)){@extract($line);
+				$checkMatchDeclared = $this->getSingleresult("select count(*) from #_match_summary where match_id = '$match_id' ");
+				if($checkMatchDeclared){
+					$pred = $this->getSingleresult("select prediction from #_prediction where pid = '$prediction_id' ");
+					$prediction_points = $this->getSingleresult("select prediction_points from #_prediction where pid = '$prediction_id' ");
+					switch ($pred) {
+					case "Who will win the match?": 
+						$get_team_id = $this->getSingleresult("select winning_team from #_match_summary where match_id = '$match_id' ");
+						if($predicted==$get_team_id){
+							$this->db_query("update #_user_prediction set status = 'win', points='$prediction_points' where user_id = '$user_id' and prediction_id = '$prediction_id' and match_id = '$match_id' ");	
+						}else{
+							$this->db_query("update #_user_prediction set status = 'loos'  where user_id = '$user_id' and prediction_id = '$prediction_id' and match_id = '$match_id' ");
+						} 
+						break;
+					case "Who will win the toss?": 
+						$get_team_id = $this->getSingleresult("select toss from #_match_summary where match_id = '$match_id' ");
+						if($predicted==$get_team_id){
+							$this->db_query("update #_user_prediction set status = 'win',points='$prediction_points' where user_id = '$user_id' and prediction_id = '$prediction_id' and match_id = '$match_id' ");	
+						}else{
+							$this->db_query("update #_user_prediction set status = 'loos'  where user_id = '$user_id' and prediction_id = '$prediction_id' and match_id = '$match_id' ");
+						}
+						break;
+					case "Predict total score of team": 
+						$runs = $this->getSingleresult("select runs from #_total_run where match_id = '$match_id' and team_id='$selected_team' ");
+						if($predicted==$runs){
+							$this->db_query("update #_user_prediction set status = 'win',points='$prediction_points' where user_id = '$user_id' and prediction_id = '$prediction_id' and match_id = '$match_id' ");	
+						}else{
+							$this->db_query("update #_user_prediction set status = 'loos'  where user_id = '$user_id' and prediction_id = '$prediction_id' and match_id = '$match_id' ");
+						}
+						break;
+					case "Predict runs in 1st over": 
+						$first_over_run = $this->getSingleresult("select first_over_run from #_match_summary where match_id = '$match_id' ");
+						if($predicted==$first_over_run){
+							$this->db_query("update #_user_prediction set status = 'win',points='$prediction_points' where user_id = '$user_id' and prediction_id = '$prediction_id' and match_id = '$match_id' ");	
+						}else{
+							$this->db_query("update #_user_prediction set status = 'loos'  where user_id = '$user_id' and prediction_id = '$prediction_id' and match_id = '$match_id' ");
+						}
+						break;
+					case "Man of the Match": 
+						$men_of_the_match = $this->getSingleresult("select men_of_the_match from #_match_summary where match_id = '$match_id' ");
+						if($predicted==$men_of_the_match){
+							$this->db_query("update #_user_prediction set status = 'win',points='$prediction_points' where user_id = '$user_id' and prediction_id = '$prediction_id' and match_id = '$match_id' ");	
+						}else{
+							$this->db_query("update #_user_prediction set status = 'loos'  where user_id = '$user_id' and prediction_id = '$prediction_id' and match_id = '$match_id' ");
+						}
+						break;
+						
+					default: 
+						return true;
+					}
+				}
+			}
+		}
+		return true;
+	}
 }
 ?>
