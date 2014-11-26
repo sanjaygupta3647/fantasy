@@ -1,16 +1,16 @@
 $(document).ready(function(){
     $('#latest-works').bxSlider({
         hideControlOnEnd: true,
-        minSlides: 2,
-        maxSlides: 14,
+        minSlides: 1,
+        maxSlides: 100,
         slideWidth: 98,
         slideMargin: 30,
         pager: false,
         nextSelector: '#bx-next4',
         prevSelector: '#bx-prev4',
         nextText: '>',
-        prevText: '<',
-    })
+        prevText: '<'
+    });
 
     $('#home-block').bxSlider({
         hideControlOnEnd: true,

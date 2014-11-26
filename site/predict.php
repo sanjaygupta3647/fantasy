@@ -20,8 +20,8 @@ $metaKeyword = $cms->getSingleresult("select metadesc from pro_matches where pid
 		<?php
 	$sql="select series_id,pid,url,title,match_date,team1,team2 from pro_matches where pid = '".$items[2]."'";
 	$searchexe = $cms->db_query($sql);
-	$total_match = mysql_num_rows($searchexe);
-    if($total_match){
+	$total_match21 = mysql_num_rows($searchexe);
+    if($total_match21){
 	$i = 1;
 	while($arrAdmin=$cms->db_fetch_array($searchexe)){extract($arrAdmin);?>
 		<table class="table table-bordered">
@@ -88,28 +88,7 @@ $metaKeyword = $cms->getSingleresult("select metadesc from pro_matches where pid
               </div>
             </div>
           </div>
-          <div class="col-md-12">
-            <p class="grap">Grab your GIfts</p>
-            <div class="bxslider-controls"> <span id="bx-prev4"> <a class="bx-prev" href="">&lt;</a></span> <span id="bx-next4"> <a class="bx-next" href="">&gt;</a></span> </div>
-            <ul style="width: 1415%; position: relative; transition-duration: 0s; transform: translate3d(-1180px, 0px, 0px);" class="center" id="latest-works">
-              <?php
-					$getGifts = $cms->db_query("SELECT * FROM #_gift WHERE status = 'Active'");
-					while($arrGift = $cms->db_fetch_array($getGifts)){
-				?>
-              <li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
-                <div class="img-caption-ar">
-                  <label for="gift" style="margin-left: 12px;">
-                  <?=$arrGift[giftName]?>
-                  </label>
-                  </br>
-                  <label for="points">
-                  <?=$arrGift[get_points]?>
-                  Points</label>
-                </div>
-              </li>
-              <?php } ?>
-            </ul> 
-          </div>
+           <?php include "site/grab-gift.php"; ?>
         </div>
         <div class="tab-pane" id="profile2">Score coming soon..</div>
          

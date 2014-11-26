@@ -15,9 +15,9 @@ $offset=$Obj->getOffset($_REQUEST["page"]);
 $sql="select pid,series_id,url,title,match_date,team1,team2 from pro_matches where status='Active' and match_date > '$date' 
 order by match_date asc   limit $offset, $limit";
 $searchexe = $cms->db_query($sql);
-$total_match = mysql_num_rows($searchexe);
+$total_match21 = mysql_num_rows($searchexe);
 
-if($total_match){
+if($total_match21){
 	$i = 1;
 	while($arrAdmin=$cms->db_fetch_array($searchexe)){extract($arrAdmin);?>
 		<table class="table table-bordered">
@@ -34,10 +34,8 @@ if($total_match){
 				  <!--<td align="center"> <?=$match_date?> GMT </td> -->
 				  <td align="center"> 
 				  <input type="hidden" id="countdown<?=$i?>" value="<?=date("Y/m/d H:i:s", strtotime($match_date))?>" />
-				  <span style="float: left;" id="time_<?=$i?>"></span><?=$date?>
-				  <!--<a href="<?=SITE_PATH?>predict/<?=$url?>" 
-				  style="background-color: rgb(0, 116, 255); color: rgb(255, 255, 255); padding: 3px 27px; border-radius: 3px; 
-				  margin-top: 16px; float: left;">Predict</a>--></td>
+				  <span style="float: left;" id="time_<?=$i?>"></span> 
+				  </td>
 			  </tr>
 			</thead>
   		</table>

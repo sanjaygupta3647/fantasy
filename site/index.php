@@ -96,7 +96,8 @@ if($_POST[register]){
                   <div class="tab-pane <?=($_POST[register])?'':'active'?>" id="home2">
 				  <form role="form" method="post"> 
 				  <input type="hidden" name="login" value="1" />
-                    <p><a href="<?=SITE_PATH?>fbconfig"><img src="images/facebook.jpg"></a> <a href="#"><img src="images/twitter.jpg"></a></p>
+				    <!--<a href="<?=SITE_PATH?>fbconfig"><img src="images/facebook.jpg"></a> <a href="#"><img src="images/twitter.jpg"></a>-->
+                    <p><a href="#"><img src="images/facebook.jpg"></a> <a href="#"><img src="images/twitter.jpg"></a></p>
                     <div class="form-group">
                       <div class="input-group login-input"> <span class="input-group-addon"><i class="fa fa-user"></i></span>
                         <input class="form-control" placeholder="User Name" value="<?=$_POST[userName]?>" name="userName" type="text">
@@ -178,7 +179,7 @@ if($_POST[register]){
       <div class="col-md-3 col-sm-6">
         <div class="content-box box-default animated fadeInUp animation-delay-12" style="background-image: none;width:auto;">
           <?php
-				$getPoints = $cms->db_query("SELECT * FROM #_prediction WHERE status = 'Active' ORDER BY prediction_points DESC LIMIT 6");
+				$getPoints = $cms->db_query("SELECT * FROM #_prediction WHERE status = 'Active' ORDER BY prediction_points DESC LIMIT 4");
 				$i = 1;
 				while($arrPoint = $cms->db_fetch_array($getPoints)){
 			?>
@@ -195,6 +196,7 @@ if($_POST[register]){
     </div>
   </div>
 </section>
+
 <div class="container">
   <section class="margin-bottom">
     <div class="back_side">
@@ -207,76 +209,15 @@ if($_POST[register]){
               <?php
 					$getGifts = $cms->db_query("SELECT * FROM #_gift WHERE status = 'Active'");
 					while($arrGift = $cms->db_fetch_array($getGifts)){
-				?>
-              <li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
-                <div class="img-caption-ar">
-                  <label for="gift" style="margin-left: 12px;">
-                  <?=$arrGift[giftName]?>
-                  </label>
-                  </br>
-                  <label for="points">
-                  <?=$arrGift[get_points]?>
-                  Points</label>
-                </div>
-              </li>
-              <?php } ?>
-              <!-- <li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
-                <div class="img-caption-ar"> <img src="<?=SITE_PATH?>images/one_slids.jpg" class="img-responsive" alt="Image"> </div>
-              </li>
-              <li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
-                <div class="img-caption-ar"> <img src="<?=SITE_PATH?>images/one_slids.jpg" class="img-responsive" alt="Image"> </div>
-              </li>
-              <li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
-                <div class="img-caption-ar"> <img src="<?=SITE_PATH?>images/one_slids.jpg" class="img-responsive" alt="Image"> </div>
-              </li>
-              <li style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
-                <div class="img-caption-ar"> <img src="<?=SITE_PATH?>images/one_slids.jpg" class="img-responsive" alt="Image"> </div>
-              </li>
-              <li style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
-                <div class="img-caption-ar"> <img src="<?=SITE_PATH?>images/one_slids.jpg" class="img-responsive" alt="Image"> </div>
-              </li>
-              <li style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
-                <div class="img-caption-ar"> <img src="<?=SITE_PATH?>images/one_slids.jpg" class="img-responsive" alt="Image"> </div>
-              </li>
-              <li style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
-                <div class="img-caption-ar"> <img src="<?=SITE_PATH?>images/one_slids.jpg" class="img-responsive" alt="Image"> </div>
-              </li>
-              <li style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
-                <div class="img-caption-ar"> <img src="<?=SITE_PATH?>images/one_slids.jpg" class="img-responsive" alt="Image"> </div>
-              </li>
-              <li style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
-                <div class="img-caption-ar"> <img src="<?=SITE_PATH?>images/one_slids.jpg" class="img-responsive" alt="Image"> </div>
-              </li>
-              <li style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
-                <div class="img-caption-ar"> <img src="<?=SITE_PATH?>images/one_slids.jpg" class="img-responsive" alt="Image"> </div>
-              </li>
-              <li style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
-                <div class="img-caption-ar"> <img src="<?=SITE_PATH?>images/one_slids.jpg" class="img-responsive" alt="Image"> </div>
-              </li>
-              <li style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
-                <div class="img-caption-ar"> <img src="<?=SITE_PATH?>images/one_slids.jpg" class="img-responsive" alt="Image"> </div>
-              </li>
-              <li style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
-                <div class="img-caption-ar"> <img src="<?=SITE_PATH?>images/one_slids.jpg" class="img-responsive" alt="Image"> </div>
-              </li>
-              <li style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
-                <div class="img-caption-ar"> <img src="<?=SITE_PATH?>images/one_slids.jpg" class="img-responsive" alt="Image"> </div>
-              </li>
-              <li style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
-                <div class="img-caption-ar"> <img src="<?=SITE_PATH?>images/one_slids.jpg" class="img-responsive" alt="Image"> </div>
-              </li>
-              <li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
-                <div class="img-caption-ar"> <img src="<?=SITE_PATH?>images/one_slids.jpg" class="img-responsive" alt="Image"> </div>
-              </li>
-              <li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
-                <div class="img-caption-ar"> <img src="<?=SITE_PATH?>images/one_slids.jpg" class="img-responsive" alt="Image"> </div>
-              </li>
-              <li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
-                <div class="img-caption-ar"> <img src="<?=SITE_PATH?>images/one_slids.jpg" class="img-responsive" alt="Image"> </div>
-              </li>
-              <li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
-                <div class="img-caption-ar"> <img src="<?=SITE_PATH?>images/one_slids.jpg" class="img-responsive" alt="Image"> </div>
-              </li>-->
+				?> 
+                 <li class="bx-clone" style="float: left; list-style: outside none none; position: relative; width: 100px; margin-right: 10px;">
+					<div class="img-caption-ar"> <img width="93" height="104" src="uploaded_files/orginal/<?=$arrGift[image]?>" class="img-responsive" alt="Image"> 
+						<div class="post-caption">
+								<a href="#"><?=$arrGift[get_points]?> Points</a>
+						</div>
+					</div>
+				 </li>  
+              <?php } ?> 
             </ul>
           </div>
           <div class="bx-controls"></div>
@@ -284,8 +225,10 @@ if($_POST[register]){
       </div>
       <div class="col-md-4" style="border-bottom: 1px solid rgb(204, 204, 204); padding-bottom: 11px;">
         <p class="em-warning-inverse"><a href="<?=SITE_PATH?>?register=true" style="color:#FFFFFF;">Register Now (its free)</a></p>
-        <p style="padding-top: 20px;"> <span style="color:#01478f;  font-size: 24px;">119,681</span><span style="padding-left:13px; font-size: 12px;"> posted in past 3 days</span></p>
-        <p><span style="color:#01478f; font-size: 24px;">$119,681</span><span style="padding-left:13px; font-size: 12px;">earned through Elance to date</span></p>
+        <p style="padding-top: 20px;"> <span style="color:#01478f;  font-size: 24px;">
+		<?=$cms->getSingleresult("SELECT count(*) FROM #_user_prediction")?></span>
+		<span style="padding-left:13px; font-size: 12px;"> Predictions Till Now</span></p>
+        <p><span style="color:#01478f; font-size: 24px;"><?=$cms->getSingleresult("SELECT count(*) FROM #_user_prediction where status='win'")?></span><span style="padding-left:13px; font-size: 12px;">Predictions are correct</span></p>
       </div>
     </div>
   </section>

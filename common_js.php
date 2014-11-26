@@ -6,7 +6,7 @@ if($loadpage=='site/dashboard.php' || $loadpage=='site/predict.php' || $loadpage
 <script type="text/javascript" src="<?=SITE_PATH?>js/jquery.countdownTimer.js"></script>
 <script>
 $(function(){
-	var cnt  = '<?=$total_match?>'; 
+	var cnt  = '<?=$total_match21?>';   
 	for(var i=1; i<=cnt;i++){  
 		var cls = $("#countdown"+i).val();
 		$('#time_'+i).countdowntimer({
@@ -24,6 +24,7 @@ $(function(){
 <script src="<?=SITE_PATH?>js/wow.min.js"></script>
 <script src="<?=SITE_PATH?>js/slidebars.js"></script>
 <script src="<?=SITE_PATH?>js/jquery.bxslider.min.js"></script>
+<script src="<?=SITE_PATH?>js/index.js"></script>
 <script src="<?=SITE_PATH?>js/holder.js"></script>
 <script src="<?=SITE_PATH?>js/buttons.js"></script>
 <script src="<?=SITE_PATH?>js/styleswitcher.js"></script>
@@ -33,7 +34,11 @@ $(function(){
 <script src="<?=SITE_PATH?>js/shBrushXml.js"></script>
 <script src="<?=SITE_PATH?>js/shBrushJScript.js"></script> 
 <script src="<?=SITE_PATH?>js/app.js"></script>
-<script src="<?=SITE_PATH?>js/index.js"></script>
+<?php
+if($loadpage=='site/redeem-points.php'){?>
+<script src="<?=SITE_PATH?>js/validate.js"></script>
+<?php
+}?>
 
 <script>
 $(".link").click(function(){
@@ -72,7 +77,7 @@ if($loadpage=='site/index.php'){?>
 }
 ?> 
 <?php 
-if($loadpage=='site/dashboard.php'){?>
+if($loadpage=='site/dashboard.php' || $loadpage=='site/my-gifts.php'){?>
 var maxpage = '<?=$totpage?>';
 var paging  = '<?=$limitpage?>';
 $("#nextpage").click(function(){
@@ -117,4 +122,5 @@ function ajaxpageing(page){
 	});
 }
 <?php }?>
+ 
 </script>
